@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">PrintTool</string>
+    <string name="receipt_print_connect">连接小票打印机</string>
+    <string name="settingactivity_print_test">打印测试</string>
+    <!--新添加，打印机状态-->
+    <string name="no_connected">打印机未连接</string>
+    <string name="on_line">已连接</string>
+    <string name="off_line">未连接</string>
+    <string name="disconnect">已关闭</string>
+    <string name="connect">连接打印机</string>
+    <string name="print_conn_failed">已断开连接</string>
+    <!-- 设置页面 -》标签打印机页面 -->
+    <string name="conn_failed">连接失败</string>
+    <string name="conn_no">没有可连接的设备</string>
+    <string name="setting_print_connect">连接打印机</string>
+    <string name="setting_print_test">打印测试</string>
+    <string name="printerName">设备名称:未连接</string>
+    <string name="settingactivity_print_connect">连接标签打印机</string>
+    <string name="label_new_devices">扫描新设备</string>
+</resources>
