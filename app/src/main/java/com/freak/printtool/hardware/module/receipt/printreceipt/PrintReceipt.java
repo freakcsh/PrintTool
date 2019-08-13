@@ -1,16 +1,11 @@
-package com.freak.printtool.hardware.printreceipt;
+package com.freak.printtool.hardware.module.receipt.printreceipt;
 
 import android.graphics.Bitmap;
 
 
 import com.freak.printtool.hardware.app.App;
 import com.freak.printtool.hardware.app.Constants;
-import com.freak.printtool.hardware.print.bean.CollectionPrintBean;
-import com.freak.printtool.hardware.print.bean.MemberRechargePrintBean;
 import com.freak.printtool.hardware.print.bean.PrintfBean;
-import com.freak.printtool.hardware.print.bean.StockFlowPrintBean;
-import com.freak.printtool.hardware.print.bean.TransferPrintBean;
-import com.freak.printtool.hardware.print.bean.WebOrderPrintBean;
 import com.freak.printtool.hardware.utils.ACache;
 import com.freak.printtool.hardware.utils.ToastUtil;
 import com.google.zxing.BarcodeFormat;
@@ -20,12 +15,16 @@ import com.posin.usbprinter.UsbPrinter;
 import java.io.IOException;
 
 /**
- * Created by hboxs028 on 2018/1/30.
- * 这是小票打印类
+ * 小票打印类
+ *
+ * @author Freak
+ * @date 2019/8/13.
  */
 
 public class PrintReceipt {
-    //打印的数据
+    /**
+     * 打印的数据
+     */
     private static String cmd = "";
 
     public static boolean receiptPrint(final PrintfBean printfBean, int type) {
@@ -106,7 +105,11 @@ public class PrintReceipt {
     }
 
 
-    //打印测试
+    /**
+     * 打印测试
+     *
+     * @return
+     */
     public boolean printReceiptTest() {
         final UsbPrinter usbPrinter = App.getInstance().getUsbPrinter();
         final PrintCategory mPrintCategory = App.getInstance().getMpPrintCategory();
@@ -130,10 +133,10 @@ public class PrintReceipt {
                         usbPrinter.doubleFontSize(false, false);
                         usbPrinter.setLineSpace(0);
                         usbPrinter.printString("小票打印机打印测试\n");
-//                        usbPrinter.printBitmapByLine(barBitMap);
-//                        usbPrinter.selectAlignment(UsbPrinter.ALIGNMENT.RIGHT);
-//                        usbPrinter.printBitmapByLine(qrBitMap);
-                        usbPrinter.walkPaper(3);
+                        usbPrinter.printBitmapByLine(barBitMap);
+                        usbPrinter.selectAlignment(UsbPrinter.ALIGNMENT.RIGHT);
+                        usbPrinter.printBitmapByLine(qrBitMap);
+                        usbPrinter.walkPaper(1);
                         usbPrinter.cutPaper();
                     } catch (IOException e) {
                         e.printStackTrace();

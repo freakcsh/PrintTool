@@ -1,4 +1,4 @@
-package com.freak.printtool.hardware.label;
+package com.freak.printtool.hardware.module.label;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -34,6 +34,8 @@ import java.util.List;
  * result Intent.
  *
  * @param <V>
+ * @author Freak
+ * @date 2019/8/13.
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
 
@@ -126,7 +128,7 @@ public class UsbDeviceList<V> extends Activity {
         intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
         intentFilter.addAction(MyUsbManager.ACTION_USB_STATE);
         registerReceiver(receiver, intentFilter);
-}
+    }
 
 
     private void doDiscovery() {
@@ -165,7 +167,7 @@ public class UsbDeviceList<V> extends Activity {
 
             if (isDeviceConnected) {
                 returnToPreviousActivity(deviceList.get(position));
-            }else {
+            } else {
                 ToastUtil.shortShow("该设备未连接，请重新搜索");
             }
         }
@@ -177,71 +179,71 @@ public class UsbDeviceList<V> extends Activity {
         unregisterReceiver(receiver);
     }
 
- class MyUsbManager {
+    class MyUsbManager {
 
-    public static final String ACTION_USB_STATE = "android.hardware.usb.action.USB_STATE";
+        public static final String ACTION_USB_STATE = "android.hardware.usb.action.USB_STATE";
 
-    /**
-     * Boolean extra indicating whether USB is connected or disconnected.
-     * Used in extras for the {@link #ACTION_USB_STATE} broadcast.
-     */
-    public static final String USB_CONNECTED = "connected";
+        /**
+         * Boolean extra indicating whether USB is connected or disconnected.
+         * Used in extras for the {@link #ACTION_USB_STATE} broadcast.
+         */
+        public static final String USB_CONNECTED = "connected";
 
-    /**
-     * Boolean extra indicating whether USB is configured.
-     * Used in extras for the {@link #ACTION_USB_STATE} broadcast.
-     */
-    public static final String USB_CONFIGURED = "configured";
+        /**
+         * Boolean extra indicating whether USB is configured.
+         * Used in extras for the {@link #ACTION_USB_STATE} broadcast.
+         */
+        public static final String USB_CONFIGURED = "configured";
 
-    /**
-     * Boolean extra indicating whether confidential user data, such as photos, should be
-     * made available on the USB connection. This variable will only be set when the user
-     * has explicitly asked for this data to be unlocked.
-     * Used in extras for the {@link #ACTION_USB_STATE} broadcast.
-     */
-    public static final String USB_DATA_UNLOCKED = "unlocked";
+        /**
+         * Boolean extra indicating whether confidential user data, such as photos, should be
+         * made available on the USB connection. This variable will only be set when the user
+         * has explicitly asked for this data to be unlocked.
+         * Used in extras for the {@link #ACTION_USB_STATE} broadcast.
+         */
+        public static final String USB_DATA_UNLOCKED = "unlocked";
 
-    /**
-     * A placeholder indicating that no USB function is being specified.
-     * Used to distinguish between selecting no function vs.
-     */
-    // the default function in {@link #setCurrentFunction(String)}.
-    public static final String USB_FUNCTION_NONE = "none";
+        /**
+         * A placeholder indicating that no USB function is being specified.
+         * Used to distinguish between selecting no function vs.
+         */
+        // the default function in {@link #setCurrentFunction(String)}.
+        public static final String USB_FUNCTION_NONE = "none";
 
-    /**
-     * Name of the adb USB function.
-     * Used in extras for the {@link #ACTION_USB_STATE} broadcast
-     */
-    public static final String USB_FUNCTION_ADB = "adb";
+        /**
+         * Name of the adb USB function.
+         * Used in extras for the {@link #ACTION_USB_STATE} broadcast
+         */
+        public static final String USB_FUNCTION_ADB = "adb";
 
-    /**
-     * Name of the RNDIS ethernet USB function.
-     * Used in extras for the {@link #ACTION_USB_STATE} broadcast
-     */
-    public static final String USB_FUNCTION_RNDIS = "rndis";
+        /**
+         * Name of the RNDIS ethernet USB function.
+         * Used in extras for the {@link #ACTION_USB_STATE} broadcast
+         */
+        public static final String USB_FUNCTION_RNDIS = "rndis";
 
-    /**
-     * Name of the MTP USB function.
-     * Used in extras for the {@link #ACTION_USB_STATE} broadcast
-     */
-    public static final String USB_FUNCTION_MTP = "mtp";
+        /**
+         * Name of the MTP USB function.
+         * Used in extras for the {@link #ACTION_USB_STATE} broadcast
+         */
+        public static final String USB_FUNCTION_MTP = "mtp";
 
-    /**
-     * Name of the PTP USB function.
-     * Used in extras for the {@link #ACTION_USB_STATE} broadcast
-     */
-    public static final String USB_FUNCTION_PTP = "ptp";
+        /**
+         * Name of the PTP USB function.
+         * Used in extras for the {@link #ACTION_USB_STATE} broadcast
+         */
+        public static final String USB_FUNCTION_PTP = "ptp";
 
-    /**
-     * Name of the audio source USB function.
-     * Used in extras for the {@link #ACTION_USB_STATE} broadcast
-     */
-    public static final String USB_FUNCTION_AUDIO_SOURCE = "audio_source";
+        /**
+         * Name of the audio source USB function.
+         * Used in extras for the {@link #ACTION_USB_STATE} broadcast
+         */
+        public static final String USB_FUNCTION_AUDIO_SOURCE = "audio_source";
 
-    /**
-     * Name of the MIDI USB function.
-     * Used in extras for the {@link #ACTION_USB_STATE} broadcast
-     */
-    public static final String USB_FUNCTION_MIDI = "midi";
-}
+        /**
+         * Name of the MIDI USB function.
+         * Used in extras for the {@link #ACTION_USB_STATE} broadcast
+         */
+        public static final String USB_FUNCTION_MIDI = "midi";
+    }
 }

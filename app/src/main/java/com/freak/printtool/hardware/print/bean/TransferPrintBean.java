@@ -2,6 +2,8 @@ package com.freak.printtool.hardware.print.bean;
 
 /**
  * 交接班打印bean类
+ * @author Freak
+ * @date 2019/8/13.
  */
 
 public class TransferPrintBean implements PrintfBean {

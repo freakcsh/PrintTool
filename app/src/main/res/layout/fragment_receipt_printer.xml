@@ -1,7 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="10dp"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -9,11 +8,11 @@
         android:id="@+id/rl_device_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="10pt"
         android:clickable="true"
-        android:paddingBottom="12dp"
-        android:paddingLeft="30dp"
-        android:paddingTop="12dp">
+        android:paddingBottom="12pt"
+        android:paddingLeft="30pt"
+        android:paddingTop="12pt">
 
         <TextView
             android:id="@+id/receipt_device_name"
@@ -22,19 +21,19 @@
             android:layout_centerVertical="true"
             android:text="@string/printerName"
             android:textColor="@color/colorGrayText"
-            android:textSize="25sp" />
+            android:textSize="14pt" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/receipt_print_connect"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="10pt"
         android:background="@drawable/bg_button_gray"
         android:clickable="true"
-        android:paddingBottom="12dp"
-        android:paddingLeft="30dp"
-        android:paddingTop="12dp">
+        android:paddingBottom="12pt"
+        android:paddingLeft="30pt"
+        android:paddingTop="12pt">
 
 
         <TextView
@@ -45,7 +44,7 @@
             android:background="@null"
             android:text="@string/receipt_print_connect"
             android:textColor="@color/colorGrayText"
-            android:textSize="25sp" />
+            android:textSize="14pt" />
 
         <TextView
             android:id="@+id/receipt_print_state"
@@ -53,22 +52,22 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="20pt"
             android:text="未连接"
             android:textColor="@color/colorGrayText"
-            android:textSize="25sp" />
+            android:textSize="14pt" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/receipt_off_print"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="10pt"
         android:background="@drawable/bg_button_gray"
         android:clickable="true"
-        android:paddingBottom="12dp"
-        android:paddingLeft="30dp"
-        android:paddingTop="12dp">
+        android:paddingBottom="12pt"
+        android:paddingLeft="30pt"
+        android:paddingTop="12pt">
 
 
         <TextView
@@ -78,7 +77,7 @@
             android:background="@null"
             android:text="断开连接"
             android:textColor="@color/colorGrayText"
-            android:textSize="25sp" />
+            android:textSize="14pt" />
 
 
     </RelativeLayout>
@@ -87,12 +86,12 @@
         android:id="@+id/receipt_examine_print_state"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="10pt"
         android:background="@drawable/bg_button_gray"
         android:clickable="true"
-        android:paddingBottom="12dp"
-        android:paddingLeft="30dp"
-        android:paddingTop="12dp">
+        android:paddingBottom="12pt"
+        android:paddingLeft="30pt"
+        android:paddingTop="12pt">
 
         <TextView
             android:layout_width="wrap_content"
@@ -101,7 +100,7 @@
             android:background="@null"
             android:text="开钱箱"
             android:textColor="@color/colorGrayText"
-            android:textSize="25sp" />
+            android:textSize="14pt" />
 
 
     </RelativeLayout>
@@ -110,12 +109,12 @@
         android:id="@+id/receipt_print_test"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="10pt"
         android:background="@drawable/bg_button_gray"
         android:clickable="true"
-        android:paddingBottom="12dp"
-        android:paddingLeft="30dp"
-        android:paddingTop="12dp">
+        android:paddingBottom="12pt"
+        android:paddingLeft="30pt"
+        android:paddingTop="12pt">
 
         <TextView
             android:id="@+id/btn_selfprint_test"
@@ -123,8 +122,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:background="@null"
-            android:text="@string/settingactivity_print_test"
+            android:text="@string/print_test"
             android:textColor="@color/colorGrayText"
-            android:textSize="25sp" />
+            android:textSize="14pt" />
     </RelativeLayout>
+
 </LinearLayout>

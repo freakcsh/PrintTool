@@ -1,4 +1,4 @@
-package com.freak.printtool.hardware.label;
+package com.freak.printtool.hardware.module.label;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,8 +6,9 @@ import android.text.format.Time;
 
 /**
  * SharePreference封装
- * 
- * @author Kevin
+ *
+ * @author Freak
+ * @date 2019/8/13.
  * 
  */
 public class PrefUtils {

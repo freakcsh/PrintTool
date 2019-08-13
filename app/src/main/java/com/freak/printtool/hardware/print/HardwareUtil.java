@@ -1,26 +1,28 @@
 package com.freak.printtool.hardware.print;
 
+import android.text.TextUtils;
 import android.util.Log;
 
-import com.android.hboxs.gaomicashier.app.App;
-import com.android.hboxs.gaomicashier.app.Constants;
-import com.android.hboxs.gaomicashier.common.hardware.print.bean.MemberRechargePrintBean;
-import com.android.hboxs.gaomicashier.common.utils.ACache;
-import com.android.hboxs.gaomicashier.common.utils.CommonUtils;
-import com.android.hboxs.gaomicashier.common.utils.DateUtil;
-import com.android.hboxs.gaomicashier.common.utils.DecimalUtil;
-import com.android.hboxs.gaomicashier.common.hardware.print.bean.CollectionPrintBean;
-import com.android.hboxs.gaomicashier.common.hardware.print.bean.PrintfBean;
-import com.android.hboxs.gaomicashier.common.hardware.print.bean.StockFlowPrintBean;
-import com.android.hboxs.gaomicashier.common.hardware.print.bean.TransferPrintBean;
-import com.android.hboxs.gaomicashier.common.hardware.print.bean.WebOrderPrintBean;
-
-import org.apache.http.util.TextUtils;
+import com.freak.printtool.hardware.app.App;
+import com.freak.printtool.hardware.app.Constants;
+import com.freak.printtool.hardware.print.bean.CollectionPrintBean;
+import com.freak.printtool.hardware.print.bean.MemberRechargePrintBean;
+import com.freak.printtool.hardware.print.bean.PrintfBean;
+import com.freak.printtool.hardware.print.bean.StockFlowPrintBean;
+import com.freak.printtool.hardware.print.bean.TransferPrintBean;
+import com.freak.printtool.hardware.print.bean.WebOrderPrintBean;
+import com.freak.printtool.hardware.utils.ACache;
+import com.freak.printtool.hardware.utils.CommonUtils;
+import com.freak.printtool.hardware.utils.DateUtil;
+import com.freak.printtool.hardware.utils.DecimalUtil;
 
 import java.io.UnsupportedEncodingException;
 
 /**
  * 调用硬件工具类
+ *
+ * @author Freak
+ * @date 2019/8/13.
  */
 
 public class HardwareUtil {
@@ -32,8 +34,8 @@ public class HardwareUtil {
     public static final int TYPE_WEB_ORDER = 1;
     public static final int TYPE_VIP_CARD = 2;
     public static final int TYPE_TRANSFER = 3;
-    public static final int TYPE_STOCK=4;
-    public static final int MEMBER_RECHARGE=5;
+    public static final int TYPE_STOCK = 4;
+    public static final int MEMBER_RECHARGE = 5;
 
     //这是现金支付
     public static final int PAY_CASH = 0;
@@ -47,7 +49,7 @@ public class HardwareUtil {
     public static final int PAY_BALANCE = 4;
 
     /* 设备是否连接 */
-    public static boolean isConnected(com.android.hboxs.gaomicashier.common.hardware.print.UsbAdmin mUsbAdmin) {
+    public static boolean isConnected(UsbAdmin mUsbAdmin) {
         mUsbAdmin.openUsb();
 
         if (!mUsbAdmin.getUsbStatus()) {
@@ -58,12 +60,12 @@ public class HardwareUtil {
     }
 
     /* 是否能打印 */
-    public static boolean isPrintfData(PrintfBean content, com.android.hboxs.gaomicashier.common.hardware.print.UsbAdmin mUsbAdmin, int type) {
+    public static boolean isPrintfData(PrintfBean content, UsbAdmin mUsbAdmin, int type) {
 
 
         Boolean print = (Boolean) ACache.get(App.getInstance().getApplicationContext()).getAsObject(Constants.WHETHER_PRINT);
-        Log.d("HardwareUtil","是否打印"+print);
-        if (print != null && !print){
+        Log.d("HardwareUtil", "是否打印" + print);
+        if (print != null && !print) {
             return false;
         }
 
@@ -101,11 +103,11 @@ public class HardwareUtil {
     }
 
     /* 是否能打印 */
-    public static boolean isPrintfData(PrintfBean content, com.android.hboxs.gaomicashier.common.hardware.print.UsbAdmin mUsbAdmin) {
+    public static boolean isPrintfData(PrintfBean content, UsbAdmin mUsbAdmin) {
 
         boolean print = (boolean) ACache.get(App.getInstance().getApplicationContext()).getAsObject(Constants.WHETHER_PRINT);
-        Log.d("HardwareUtil","是否打印"+print);
-        if (!print){
+        Log.d("HardwareUtil", "是否打印" + print);
+        if (!print) {
             return false;
         }
 
@@ -129,11 +131,11 @@ public class HardwareUtil {
     }
 
     /* 是否能打印 */
-    public static boolean isPrintfData(String content, com.android.hboxs.gaomicashier.common.hardware.print.UsbAdmin mUsbAdmin) {
+    public static boolean isPrintfData(String content, UsbAdmin mUsbAdmin) {
 
         boolean print = (boolean) ACache.get(App.getInstance().getApplicationContext()).getAsObject(Constants.WHETHER_PRINT);
-        Log.d("HardwareUtil","是否打印"+print);
-        if (!print){
+        Log.d("HardwareUtil", "是否打印" + print);
+        if (!print) {
             return false;
         }
 
@@ -154,10 +156,11 @@ public class HardwareUtil {
 
     /**
      * 打开钱箱
+     *
      * @param mUsbAdmin
      * @return
      */
-    public static boolean pushCash(com.android.hboxs.gaomicashier.common.hardware.print.UsbAdmin mUsbAdmin) {
+    public static boolean pushCash(UsbAdmin mUsbAdmin) {
         boolean canPush = false;
         mUsbAdmin.openUsb();
         mUsbAdmin.getUsbStatus();
@@ -179,7 +182,7 @@ public class HardwareUtil {
         String productName = "";
         String price = "";
         String num = "";
-        String promotionPrice="";
+        String promotionPrice = "";
 
 
         /**
@@ -187,24 +190,24 @@ public class HardwareUtil {
          * */
         for (int i = 0; i < content.getProductItemses().size(); i++) {
             //单个商品的优惠价格
-            promotionPrice=content.getProductItemses().get(i).getPromotionPrice();
+            promotionPrice = content.getProductItemses().get(i).getPromotionPrice();
 //            productName = CommonUtils.formatStr(content.getProductItemses().get(i).getName(), 30);
             productName = content.getProductItemses().get(i).getName();
 
             num = CommonUtils.formatStr(content.getProductItemses().get(i).getNum(), 7);
-                //原价
-                price = CommonUtils.formatStr(content.getProductItemses().get(i).getMomentPrice(), 8);
-                if (Double.valueOf(promotionPrice)==0){
-                    productListStr += productName+ cmdEnter()
-                            + "\t"+price
-                            + num
-                            + content.getProductItemses().get(i).getTotal() + cmdEnter();
-                }else {
-                    productListStr += productName+ cmdEnter()
-                            + "\t"+ price
-                            + num
-                            + content.getProductItemses().get(i).getTotal() + cmdEnter()+"                    优惠:" + promotionPrice + cmdEnter();
-                }
+            //原价
+            price = CommonUtils.formatStr(content.getProductItemses().get(i).getMomentPrice(), 8);
+            if (Double.valueOf(promotionPrice) == 0) {
+                productListStr += productName + cmdEnter()
+                        + "\t" + price
+                        + num
+                        + content.getProductItemses().get(i).getTotal() + cmdEnter();
+            } else {
+                productListStr += productName + cmdEnter()
+                        + "\t" + price
+                        + num
+                        + content.getProductItemses().get(i).getTotal() + cmdEnter() + "                    优惠:" + promotionPrice + cmdEnter();
+            }
 
         }
 
@@ -226,7 +229,7 @@ public class HardwareUtil {
                 "\n--------------------------------" +
                 "合计数量:" + content.getQuality() +
                 cmdEnter() +
-                "总额:" + content.getTotalCash() +"    \t实收:" + content.getTotalReceipts() +
+                "总额:" + content.getTotalCash() + "    \t实收:" + content.getTotalReceipts() +
                 cmdEnter() +
                 "总优惠:" + content.getDiscount() + "    \t积分:" + content.getTotalEcoin() +
                 cmdEnter() +
@@ -245,6 +248,7 @@ public class HardwareUtil {
 
     /**
      * 打印收货单据
+     *
      * @param stockFlowPrintBean
      * @return
      * @throws UnsupportedEncodingException
@@ -352,7 +356,7 @@ public class HardwareUtil {
 
         dataStr = "    酒茶生云收银交接班单据\n" +
                 cmdEnter() +
-                "编号:" + content.getSn() +"\n"+
+                "编号:" + content.getSn() + "\n" +
                 cmdEnter() +
                 "门店:" + content.getShopName() +
                 cmdEnter() +
@@ -520,7 +524,7 @@ public class HardwareUtil {
                 cmdEnter() +
                 "联系方式:" + content.getUserPhone() +
                 cmdEnter() +
-                "配送费:" + content.getDeliveryFee() +"   " + "配送方式:" + content.getDeliveryType() +
+                "配送费:" + content.getDeliveryFee() + "   " + "配送方式:" + content.getDeliveryType() +
                 cmdEnter() +
                 "配送地址:" + content.getUserAddress() +
                 cmdEnter() +
@@ -539,7 +543,7 @@ public class HardwareUtil {
      * @return
      * @throws UnsupportedEncodingException
      */
-    public static String memberRechargeFormat(MemberRechargePrintBean content) throws UnsupportedEncodingException{
+    public static String memberRechargeFormat(MemberRechargePrintBean content) throws UnsupportedEncodingException {
         String dataStr = null;
         String productListStr = "";
         String productName = "";
@@ -556,13 +560,13 @@ public class HardwareUtil {
 //                    + realCount
 //                    + "   "+content.getStockFlowToPrintList().get(i).getUnit() + cmdEnter();
 //        }
-        productName=CommonUtils.formatStr(content.getCommodityName(),14);
-        price=CommonUtils.formatStr(content.getPrice(),8);
-        num=CommonUtils.formatStr(content.getNum(),5);
-        productListStr+=productName
-                +price
-                +num
-                +content.getPrice()+ cmdEnter();
+        productName = CommonUtils.formatStr(content.getCommodityName(), 14);
+        price = CommonUtils.formatStr(content.getPrice(), 8);
+        num = CommonUtils.formatStr(content.getNum(), 5);
+        productListStr += productName
+                + price
+                + num
+                + content.getPrice() + cmdEnter();
         dataStr = "      酒茶生云收银会员充值单据\n" +
                 cmdEnter() +
                 "门  店:" + content.getShopName() +
@@ -596,7 +600,7 @@ public class HardwareUtil {
         return dataStr;
     }
 
-    public static String strokFlowFormat(StockFlowPrintBean content) throws UnsupportedEncodingException{
+    public static String strokFlowFormat(StockFlowPrintBean content) throws UnsupportedEncodingException {
         String dataStr = null;
         String productListStr = "";
         String productName = "";
@@ -611,7 +615,7 @@ public class HardwareUtil {
             productListStr += productName
                     + applyCount
                     + realCount
-                    + "   "+content.getStockFlowToPrintList().get(i).getUnit() + cmdEnter();
+                    + "   " + content.getStockFlowToPrintList().get(i).getUnit() + cmdEnter();
         }
 
         dataStr = "      酒茶生云收银收货单据\n" +
@@ -644,6 +648,7 @@ public class HardwareUtil {
 
         return dataStr;
     }
+
     /**
      * 测试格式
      */
@@ -664,6 +669,7 @@ public class HardwareUtil {
 
     /**
      * 换行
+     *
      * @return
      */
     public static String cmdEnter() {

@@ -1,4 +1,4 @@
-package com.freak.printtool.hardware.printreceipt;
+package com.freak.printtool.hardware.module.receipt;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -19,8 +19,11 @@ import android.widget.TextView;
 import com.freak.printtool.R;
 import com.freak.printtool.hardware.app.App;
 import com.freak.printtool.hardware.app.Constants;
-import com.freak.printtool.hardware.label.PrefUtils;
+import com.freak.printtool.hardware.module.label.PrefUtils;
 import com.freak.printtool.hardware.print.UsbAdmin;
+import com.freak.printtool.hardware.module.receipt.printreceipt.MyUsbPrinterUtil;
+import com.freak.printtool.hardware.module.receipt.printreceipt.PrintCategory;
+import com.freak.printtool.hardware.module.receipt.printreceipt.PrintReceipt;
 import com.freak.printtool.hardware.utils.ACache;
 import com.freak.printtool.hardware.utils.ToastUtil;
 import com.posin.usbprinter.UsbPrinter;
@@ -30,15 +33,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 这是设置的打印小票机的设置
+ * 打印小票机
+ *
+ * @author Freak
+ * @date 2019/8/13.
  */
-public class SettingBillPrinterFragment extends Fragment implements OnClickListener {
+public class ReceiptPrinterFragment extends Fragment implements OnClickListener {
 
 
     //usb授权设置
     public UsbAdmin mUsbAdmin = null;
     private App app;
-
     private static TextView receipt_device_name;
     private RelativeLayout receiptPrintConnect;
     private static TextView receipt_print_state;
@@ -49,7 +54,7 @@ public class SettingBillPrinterFragment extends Fragment implements OnClickListe
     private static ArrayList<UsbDevice> receiptDeviceList;
     public static UsbDevice receiptUSBDevice;
     public static boolean isConnected = false;
-    protected static final String TAG = "SettingActivity";
+    protected static final String TAG = "MainActivity";
 
     /***佳博小票打印机**/
     public static MyUsbPrinterUtil myUsbPrinterUtil = null;
@@ -58,10 +63,9 @@ public class SettingBillPrinterFragment extends Fragment implements OnClickListe
     public static PrintCategory mpPrintCategory = null;
 //    private Subscription subscribe;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_setting_printer, container, false);
+        View view = inflater.inflate(R.layout.fragment_receipt_printer, container, false);
 
         receipt_device_name = view.findViewById(R.id.receipt_device_name);
         receiptPrintConnect = view.findViewById(R.id.receipt_print_connect);
@@ -69,34 +73,23 @@ public class SettingBillPrinterFragment extends Fragment implements OnClickListe
         receiptOffPrint = view.findViewById(R.id.receipt_off_print);
         receiptExaminePrintState = view.findViewById(R.id.receipt_examine_print_state);
         receiptPrintTest = view.findViewById(R.id.receipt_print_test);
-
-        receiptPrintConnect.setOnClickListener(this);//连接打印机
-        receiptOffPrint.setOnClickListener(this);//断开打印机
-        receiptExaminePrintState.setOnClickListener(this);//开钱箱
-        receiptPrintTest.setOnClickListener(this);//打印测试
+        //连接打印机
+        receiptPrintConnect.setOnClickListener(this);
+        //断开打印机
+        receiptOffPrint.setOnClickListener(this);
+        //开钱箱
+        receiptExaminePrintState.setOnClickListener(this);
+        //打印测试
+        receiptPrintTest.setOnClickListener(this);
         mContext = getActivity();
         updateButtonState(isConnected);
 
         app = (App) getActivity().getApplication();
 //        mUsbAdmin = app.getUsbAdmin();
-
         ACache.get(getActivity()).put(Constants.WHETHER_PRINT, true);
-//        myUsbPrinterUtil = App.getInstance().getMyUsbPrinterUtil();
-//        usbPrinter = App.getInstance().getUsbPrinter();
-//        receiptUSBDevice = App.getInstance().getReceiptUSBDevice();
-
-//        subscribe = RxBus.getDefault().toObservable(StateEvent.class).subscribe(new Action1<StateEvent>() {
-//            @Override
-//            public void call(StateEvent printEvent) {
-//                isConnected = printEvent.isConnected();
-//                Log.e("freak", isConnected + "bbb");
-//                Log.e("freak", printEvent.isConnected() + "aaa");
-//                updateButtonState(isConnected);
-//            }
-//        });
-
         return view;
     }
+
 
     @Override
     public void onStart() {
@@ -136,18 +129,14 @@ public class SettingBillPrinterFragment extends Fragment implements OnClickListe
                         ToastUtil.shortShow("测试结果：钱箱打开失败...");
                     }
                 }
-
                 break;
             //打印测试
             case R.id.receipt_print_test:
                 if (usbPrinter != null) {
-
                     new PrintReceipt().printReceiptTest();
-
                 } else {
                     ToastUtil.shortShow("小票打印机未连接");
                 }
-
                 break;
             default:
                 break;
@@ -210,7 +199,7 @@ public class SettingBillPrinterFragment extends Fragment implements OnClickListe
                      * 票据打印机：pid=20497 vid=1046
                      * 佳博打印机：pid=1536 vid=26728
                      */
-                    if (usbDevice.getVendorId() == 26728 && usbDevice.getProductId() == 1536 || usbDevice.getVendorId() == 4070 && usbDevice.getProductId() == 33054 ||
+                    if (usbDevice.getVendorId() == 26728 && usbDevice.getProductId() == 1280 || usbDevice.getVendorId() == 26728 && usbDevice.getProductId() == 1536 || usbDevice.getVendorId() == 4070 && usbDevice.getProductId() == 33054 ||
                             usbDevice.getVendorId() == 1155 && usbDevice.getProductId() == 1803 || usbDevice.getVendorId() == 1046 && usbDevice.getProductId() == 20497) {
                         receiptDeviceList.add(usbDevice);
                     }

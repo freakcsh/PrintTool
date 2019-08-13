@@ -1,4 +1,4 @@
-package com.freak.printtool.hardware.label;
+package com.freak.printtool.hardware.module.label;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -19,13 +19,16 @@ import java.util.List;
 
 
 /**
- * 开发酒茶生标签打印模版
- * @author hboxs028
+ * 标签打印模版
+ *
+ * @author Freak
+ * @date 2019/8/13.
  */
-public class PrintLabelGaomi {
+public class PrintLabel {
 
     /**
      * 多个打印
+     *
      * @param iPrinter
      * @param mContext
      * @param productLabelBeanList
@@ -80,16 +83,16 @@ public class PrintLabelGaomi {
                              * 旋转180度
                              */
                             //名称
-                            if (TextUtils.isEmpty(p.getName())){
+                            if (TextUtils.isEmpty(p.getName())) {
                                 iPrinter.drawTextTSPL(50 * 8, 40 * 8 + 10, 80 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 2, PrinterConstants.PRotate.Rotate_180, " ");
-                            }else {
+                            } else {
                                 iPrinter.drawTextTSPL(50 * 8, 40 * 8 + 10, 80 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 2, PrinterConstants.PRotate.Rotate_180, p.getName());
                             }
                             // 横线上方区域右侧的文字
                             //零售价
-                            if (TextUtils.isEmpty(p.getPrice())){
+                            if (TextUtils.isEmpty(p.getPrice())) {
                                 iPrinter.drawTextTSPL(33 * 8, 28 * 8, 70 * 8, 7 * 8, PAlign.START, PAlign.START, true, 2, 2, PrinterConstants.PRotate.Rotate_180, " ");
-                            }else {
+                            } else {
                                 iPrinter.drawTextTSPL(33 * 8, 28 * 8, 70 * 8, 7 * 8, PAlign.START, PAlign.START, true, 2, 2, PrinterConstants.PRotate.Rotate_180, p.getPrice());
                             }
                             // 横线上方区域右侧的文字 价格和E币，空格间隔
@@ -98,69 +101,69 @@ public class PrintLabelGaomi {
                             //会员价 TODO 已取消
 //                            iPrinter.drawTextTSPL(33 * 8, 14 * 8 + 2, 70 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 2, PrinterConstants.PRotate.Rotate_180, p.getCash());
                             //e币   最大数据个数限制为5位  例如：99.99
-                            if (TextUtils.isEmpty(p.getEprice())){
+                            if (TextUtils.isEmpty(p.getEprice())) {
                                 iPrinter.drawTextTSPL(17 * 8, 14 * 8 + 2, 70 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 2, PrinterConstants.PRotate.Rotate_180, " ");
-                            }else {
+                            } else {
                                 iPrinter.drawTextTSPL(17 * 8, 14 * 8 + 2, 70 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 2, PrinterConstants.PRotate.Rotate_180, p.getEprice());
                             }
                             //计量单位
-                            if (TextUtils.isEmpty(p.getUnit())){
+                            if (TextUtils.isEmpty(p.getUnit())) {
                                 iPrinter.drawTextTSPL(60 * 8, 20 * 8, 80 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 1, PrinterConstants.PRotate.Rotate_180, " ");
-                            }else {
+                            } else {
                                 iPrinter.drawTextTSPL(60 * 8, 20 * 8, 80 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 1, PrinterConstants.PRotate.Rotate_180, p.getUnit());
                             }
                             // 二维码下方的一维条码 13位
                             // 14，15，16，17，18 no 12
                             //sn
-                            if (TextUtils.isEmpty(p.getSn())){
+                            if (TextUtils.isEmpty(p.getSn())) {
                                 iPrinter.drawTextTSPL(60 * 8, 14 * 8 + 2, 80 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 1, PrinterConstants.PRotate.Rotate_180, " ");
-                            }else {
+                            } else {
                                 iPrinter.drawTextTSPL(60 * 8, 14 * 8 + 2, 80 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 1, PrinterConstants.PRotate.Rotate_180, p.getSn());
                             }
                             //int start_x, int start_y, PBarcodeType type, int height, boolean isReadable, PRotate rotate, int narrowWidth, int wideWidth, String content
 //                            iPrinter.drawBarCodeTSPL(75 * 8, 10 * 8 + 4, PBarcodeType.JAN3_EAN13, 5 * 8, false, null, 1, 1, p.getSn());
-                            iPrinter.drawBarCodeTSPL(75*8, 10 * 8 + 4, PBarcodeType.JAN3_EAN13, 5 * 8, false, PrinterConstants.PRotate.Rotate_180, 1, 1, p.getSn());
+                            iPrinter.drawBarCodeTSPL(75 * 8, 10 * 8 + 4, PBarcodeType.JAN3_EAN13, 5 * 8, false, PrinterConstants.PRotate.Rotate_180, 1, 1, p.getSn());
 
                             //以下三条数据是不打印的，只是打印空格
                             //规格
-                            if (TextUtils.isEmpty(p.getSpecification())){
+                            if (TextUtils.isEmpty(p.getSpecification())) {
                                 iPrinter.drawTextTSPL(60 * 8, 30 * 8 + 4, 70 * 8, 7 * 8, PAlign.CENTER, PAlign.START, true, 1, 1, PrinterConstants.PRotate.Rotate_180, " ");
-                            }else {
+                            } else {
                                 iPrinter.drawTextTSPL(60 * 8, 30 * 8 + 4, 70 * 8, 7 * 8, PAlign.CENTER, PAlign.START, true, 1, 1, PrinterConstants.PRotate.Rotate_180, p.getSpecification());
                             }
                             // 横线上方区域左下方的文字 （(0,0)(40*8,7*8)）
                             //产地
-                            if (TextUtils.isEmpty(p.getProducer())){
+                            if (TextUtils.isEmpty(p.getProducer())) {
                                 iPrinter.drawTextTSPL(65 * 8, 25 * 8, 75 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 1, PrinterConstants.PRotate.Rotate_180, " ");
-                            }else {
+                            } else {
                                 iPrinter.drawTextTSPL(65 * 8, 25 * 8, 75 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 1, PrinterConstants.PRotate.Rotate_180, p.getProducer());
                             }
                             //等级
-                            if (TextUtils.isEmpty(p.getRank())){
+                            if (TextUtils.isEmpty(p.getRank())) {
                                 iPrinter.drawTextTSPL(48 * 8, 25 * 8, 70 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 1, PrinterConstants.PRotate.Rotate_180, " ");
-                            }else {
+                            } else {
                                 iPrinter.drawTextTSPL(48 * 8, 25 * 8, 70 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 1, PrinterConstants.PRotate.Rotate_180, p.getRank());
                             }
                             //物价员
-                            if (TextUtils.isEmpty(p.getSupervisor())){
+                            if (TextUtils.isEmpty(p.getSupervisor())) {
                                 iPrinter.drawTextTSPL(14 * 8, 5 * 8, 70 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 1, PrinterConstants.PRotate.Rotate_180, " ");
 
-                            }else {
+                            } else {
                                 iPrinter.drawTextTSPL(14 * 8, 5 * 8, 70 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 1, PrinterConstants.PRotate.Rotate_180, p.getSupervisor());
                             }
 
                         } else {
                             //名称
-                            if (TextUtils.isEmpty(p.getName())){
+                            if (TextUtils.isEmpty(p.getName())) {
                                 iPrinter.drawTextTSPL(30 * 8, 11 * 8, 70 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 2, null, " ");
-                            }else {
+                            } else {
                                 iPrinter.drawTextTSPL(30 * 8, 11 * 8, 70 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 2, null, p.getName());
                             }
                             // 横线上方区域右侧的文字
                             //零售价
-                            if (TextUtils.isEmpty(p.getPrice())){
+                            if (TextUtils.isEmpty(p.getPrice())) {
                                 iPrinter.drawTextTSPL(48 * 8, 23 * 8, 80 * 8, 7 * 8, PAlign.START, PAlign.START, true, 2, 2, null, " ");
-                            }else {
+                            } else {
                                 iPrinter.drawTextTSPL(48 * 8, 23 * 8, 80 * 8, 7 * 8, PAlign.START, PAlign.START, true, 2, 2, null, p.getPrice());
                             }
                             // 横线上方区域右侧的文字 价格和E币，空格间隔
@@ -169,26 +172,26 @@ public class PrintLabelGaomi {
                             //会员价 TODO 已取消
 //                            iPrinter.drawTextTSPL(47 * 8, 38 * 8, 70 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 2, null, p.getCash());
                             //打印积分
-                            if (TextUtils.isEmpty(p.getEprice())){
+                            if (TextUtils.isEmpty(p.getEprice())) {
                                 iPrinter.drawTextTSPL(63 * 8, 38 * 8, 80 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 2, null, " ");
 
-                            }else {
+                            } else {
                                 iPrinter.drawTextTSPL(63 * 8, 38 * 8, 80 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 2, null, p.getEprice());
 
                             }
 
                             //计量单位
-                            if (TextUtils.isEmpty(p.getUnit())){
+                            if (TextUtils.isEmpty(p.getUnit())) {
                                 iPrinter.drawTextTSPL(18 * 8, 32 * 8, 40 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 1, null, " ");
-                            }else {
+                            } else {
                                 iPrinter.drawTextTSPL(18 * 8, 32 * 8, 40 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 1, null, p.getUnit());
                             }
                             // 二维码下方的一维条码 13位
                             // 14，15，16，17，18 no 12
                             //sn
-                            if (TextUtils.isEmpty(p.getSn())){
+                            if (TextUtils.isEmpty(p.getSn())) {
                                 iPrinter.drawTextTSPL(12 * 8, 37 * 8 + 2, 70 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 1, null, " ");
-                            }else {
+                            } else {
                                 iPrinter.drawTextTSPL(12 * 8, 37 * 8 + 2, 70 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 1, null, p.getSn());
                             }
 
@@ -196,9 +199,9 @@ public class PrintLabelGaomi {
                             iPrinter.drawBarCodeTSPL(40, 40 * 8 + 4, PBarcodeType.JAN3_EAN13, 5 * 8, false, null, 1, 1, p.getSn());
 
                             //物价员
-                            if (TextUtils.isEmpty(p.getSupervisor())){
+                            if (TextUtils.isEmpty(p.getSupervisor())) {
                                 iPrinter.drawTextTSPL(65 * 8, 47 * 8, 80 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 1, null, " ");
-                            }else {
+                            } else {
                                 iPrinter.drawTextTSPL(65 * 8, 47 * 8, 80 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 1, null, p.getSupervisor());
                             }
 
@@ -492,6 +495,7 @@ public class PrintLabelGaomi {
 
     /**
      * 打印测试
+     *
      * @param iPrinter
      * @param mContext
      * @param p
@@ -506,7 +510,7 @@ public class PrintLabelGaomi {
                 int top = PrefUtils.getInt(mContext, "topmargin", 0);
                 int numbers = PrefUtils.getInt(mContext, "printnumbers", 1);
                 int isBeep = PrefUtils.getInt(mContext, "isBeep", 0);
-                int printlevel=PrefUtils.getInt(mContext,"printlevel",7);
+                int printlevel = PrefUtils.getInt(mContext, "printlevel", 7);
 
                 try {
                     // 设置标签纸大小 型号SIZE_58mm 尺寸56 * 8：45 * 8
@@ -653,7 +657,7 @@ public class PrintLabelGaomi {
                         iPrinter.drawTextTSPL(60 * 8, 14 * 8 + 2, 80 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 1, PrinterConstants.PRotate.Rotate_180, p.getSn());
 
                         //int start_x, int start_y, PBarcodeType type, int height, boolean isReadable, PRotate rotate, int narrowWidth, int wideWidth, String content
-                        iPrinter.drawBarCodeTSPL(75*8, 10 * 8 + 4, PBarcodeType.JAN3_EAN13, 5 * 8, false, PrinterConstants.PRotate.Rotate_180, 1, 1, p.getSn());
+                        iPrinter.drawBarCodeTSPL(75 * 8, 10 * 8 + 4, PBarcodeType.JAN3_EAN13, 5 * 8, false, PrinterConstants.PRotate.Rotate_180, 1, 1, p.getSn());
                         //以下三条数据是不打印的，只是打印空格
                         //规格
                         iPrinter.drawTextTSPL(60 * 8, 30 * 8 + 4, 70 * 8, 7 * 8, PAlign.CENTER, PAlign.START, true, 1, 1, PrinterConstants.PRotate.Rotate_180, " ");
@@ -663,7 +667,7 @@ public class PrintLabelGaomi {
 
                         //等级
                         iPrinter.drawTextTSPL(48 * 8, 25 * 8, 70 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 1, PrinterConstants.PRotate.Rotate_180, " ");
-                       //TODO：2018-02-10 需要调试位置
+                        //TODO：2018-02-10 需要调试位置
                         //物价员
                         iPrinter.drawTextTSPL(14 * 8, 5 * 8, 70 * 8, 7 * 8, PAlign.START, PAlign.START, true, 1, 1, PrinterConstants.PRotate.Rotate_180, "物价员");
                     } else {

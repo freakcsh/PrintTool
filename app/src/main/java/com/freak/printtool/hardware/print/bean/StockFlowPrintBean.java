@@ -6,7 +6,8 @@ import java.util.List;
 /**
  * 收货打印
  *
- * Created by hboxs020 on 2017/9/19.
+ * @author Freak
+ * @date 2019/8/13.
  */
 
 public class StockFlowPrintBean implements PrintfBean {

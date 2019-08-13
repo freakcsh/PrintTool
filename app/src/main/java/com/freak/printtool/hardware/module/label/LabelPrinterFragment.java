@@ -1,4 +1,4 @@
-package com.freak.printtool.hardware.printreceipt;
+package com.freak.printtool.hardware.module.label;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -31,9 +31,6 @@ import android.widget.TextView;
 
 import com.freak.printtool.R;
 import com.freak.printtool.hardware.app.Constants;
-import com.freak.printtool.hardware.label.PrefUtils;
-import com.freak.printtool.hardware.label.PrintLabelGaomi;
-import com.freak.printtool.hardware.label.UsbDeviceList;
 import com.freak.printtool.hardware.print.bean.ProductLabelBean;
 import com.freak.printtool.hardware.utils.ACache;
 import com.freak.printtool.hardware.utils.ToastUtil;
@@ -47,20 +44,18 @@ import java.util.HashMap;
 import java.util.List;
 
 
-
-
 /**
- * 设置 - 标签
+ * 标签打印机
  *
- * @anthor dmin
- * created at 2017/11/14 20:24
+ * @author Freak
+ * @date 2019/8/13.
  */
 
-public class SettingLabelPrinterFragment extends Fragment implements View.OnClickListener {
+public class LabelPrinterFragment extends Fragment implements View.OnClickListener {
 
     public static final int CONNECT_DEVICE = 1;
 
-    protected static final String TAG = "SettingActivity";
+    protected static final String TAG = "MainActivity";
 
     //    public PrinterInstance myPrinter;
     //这是默认是usb
@@ -102,7 +97,7 @@ public class SettingLabelPrinterFragment extends Fragment implements View.OnClic
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_setting_label_printer, container, false);
+        View view = inflater.inflate(R.layout.fragment_label_printer, container, false);
 
         init(view);
 
@@ -157,13 +152,13 @@ public class SettingLabelPrinterFragment extends Fragment implements View.OnClic
         if (direction) {
 
 
-            spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(),R.color.colorGrayText)), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(),R.color.colorAccent)), 6, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(), R.color.colorGrayText)), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(), R.color.colorPrimary)), 6, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             directionSelect.setText(spannableString);
             directionSelect.setMovementMethod(LinkMovementMethod.getInstance());
         } else {
-            spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(),R.color.colorAccent)), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(),R.color.colorGrayText)), 6, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(), R.color.colorPrimary)), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(), R.color.colorGrayText)), 6, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             directionSelect.setText(spannableString);
             directionSelect.setMovementMethod(LinkMovementMethod.getInstance());
         }
@@ -173,13 +168,13 @@ public class SettingLabelPrinterFragment extends Fragment implements View.OnClic
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Log.e("cai", "+++" + isChecked);
                 if (isChecked) {
-                    spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(),R.color.colorGrayText)), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(),R.color.colorAccent)), 6, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(), R.color.colorGrayText)), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(), R.color.colorPrimary)), 6, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     directionSelect.setText(spannableString);
                     directionSelect.setMovementMethod(LinkMovementMethod.getInstance());
                 } else {
-                    spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(),R.color.colorAccent)), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(),R.color.colorGrayText)), 6, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(), R.color.colorPrimary)), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(), R.color.colorGrayText)), 6, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     directionSelect.setText(spannableString);
                     directionSelect.setMovementMethod(LinkMovementMethod.getInstance());
                 }
@@ -212,8 +207,8 @@ public class SettingLabelPrinterFragment extends Fragment implements View.OnClic
             case R.id.rl_print_connect:
                 //连接打印机
             case R.id.btn_connect:
-//                showSelectDevicesDialog();
-                getDevice();
+                showSelectDevicesDialog();
+//                getDevice();
                 break;
             case R.id.off_print://断开打印机连接
                 breakPrinter();
@@ -245,7 +240,7 @@ public class SettingLabelPrinterFragment extends Fragment implements View.OnClic
                                 @Override
                                 public void run() {
                                     ToastUtil.shortShow(strStatus);
-                                    XLog.i(TAG, "zl at SettingActivity.java onClick()------> btn_status_test");
+                                    XLog.i(TAG, "zl at MainActivity.java onClick()------> btn_status_test");
                                 }
                             });
 
@@ -274,7 +269,7 @@ public class SettingLabelPrinterFragment extends Fragment implements View.OnClic
                 productLabelBean.setSn("0000000000001");
                 productLabelBean.setPrice("3.00");
 
-                new PrintLabelGaomi().doPrintTSPL(myPrinter, getActivity(), productLabelBean);
+                new PrintLabel().doPrintTSPL(myPrinter, getActivity(), productLabelBean);
 
                 break;
 
@@ -296,7 +291,7 @@ public class SettingLabelPrinterFragment extends Fragment implements View.OnClic
             myPrinter.closeConnection();
             //清空打印对象
             myPrinter = null;
-            XLog.i(TAG, "yxz at SettingActivity.java  onClick()  mPrinter:" + myPrinter);
+            XLog.i(TAG, "yxz at MainActivity.java  onClick()  mPrinter:" + myPrinter);
         }
         if (isConnected) {
             tv_device_name.setText("设备名称: " + "思普瑞特价签机");
@@ -369,7 +364,6 @@ public class SettingLabelPrinterFragment extends Fragment implements View.OnClic
      * 弹出选择设备dialog
      */
     private void showSelectDevicesDialog() {
-
         Intent intent = new Intent(getActivity(), UsbDeviceList.class);
         startActivityForResult(intent, CONNECT_DEVICE);
     }
@@ -457,7 +451,7 @@ public class SettingLabelPrinterFragment extends Fragment implements View.OnClic
         } else {
             labelPrintState.setText(mContext.getResources().getString(R.string.off_line));
             tv_device_name.setText("设备名称:未连接");
-            XLog.d(TAG, "yxz at SettingActivity.java updateButtonState() ---end");
+            XLog.d(TAG, "yxz at MainActivity.java updateButtonState() ---end");
 
         }
         PrefUtils.setBoolean(mContext, Constants.CONNECTSTATE, isConnected);
@@ -523,7 +517,7 @@ public class SettingLabelPrinterFragment extends Fragment implements View.OnClic
 
     @Override
     public void onDestroy() {
-        XLog.e(TAG, "yxz at SettingActivity.java onDestroy()   progressdialog");
+        XLog.e(TAG, "yxz at MainActivity.java onDestroy()   progressdialog");
         super.onDestroy();
         if (hasRegDisconnectReceiver) {
             mContext.unregisterReceiver(mUsbReceiver);

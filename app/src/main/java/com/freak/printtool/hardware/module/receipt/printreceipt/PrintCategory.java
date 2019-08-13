@@ -1,4 +1,4 @@
-package com.freak.printtool.hardware.printreceipt;
+package com.freak.printtool.hardware.module.receipt.printreceipt;
 
 import android.graphics.Bitmap;
 
@@ -10,8 +10,9 @@ import com.google.zxing.common.BitMatrix;
 import java.util.Hashtable;
 
 /**
- * Created by Administrator on 2018/1/6.
- * 这是小票打印类别类
+ *
+ * @author Freak
+ * @date 2019/8/13.
  */
 
 public class PrintCategory {

@@ -1,4 +1,4 @@
-package com.freak.printtool.hardware.printreceipt;
+package com.freak.printtool.hardware.module.receipt.printreceipt;
 
 import android.annotation.SuppressLint;
 import android.app.PendingIntent;
@@ -12,7 +12,6 @@ import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbManager;
-import android.os.Build;
 import android.util.Log;
 
 import com.freak.printtool.R;
@@ -26,14 +25,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.freak.printtool.hardware.printreceipt.SettingBillPrinterFragment.receiptHandler;
-import static com.freak.printtool.hardware.printreceipt.SettingBillPrinterFragment.receiptUSBDevice;
-import static com.freak.printtool.hardware.printreceipt.SettingBillPrinterFragment.usbPrinter;
+import static com.freak.printtool.hardware.module.receipt.ReceiptPrinterFragment.receiptHandler;
+import static com.freak.printtool.hardware.module.receipt.ReceiptPrinterFragment.receiptUSBDevice;
+import static com.freak.printtool.hardware.module.receipt.ReceiptPrinterFragment.usbPrinter;
 
 
 /**
- * Created by Administrator on 2018/1/5.
  * 这是小票打印机工具类
+ *
+ * @author Freak
+ * @date 2019/8/13.
  */
 
 public class MyUsbPrinterUtil {
@@ -133,16 +134,16 @@ public class MyUsbPrinterUtil {
 
 //                receiptHandler.sendEmptyMessage(1);
 //                App.getInstance().set
-//                SettingBillPrinterFragment.isConnected=true;
+//                ReceiptPrinterFragment.isConnected=true;
 
 //               RxBus.getDefault().post(new PrintEvent(0,true));
                 /**
                  * 2月7号测试下面代码
                  */
-//                SettingBillPrinterFragment settingBillPrinterFragment = new SettingBillPrinterFragment();
+//                ReceiptPrinterFragment settingBillPrinterFragment = new ReceiptPrinterFragment();
 //                Log.e("freak",settingBillPrinterFragment.getUserVisibleHint()+"\nsettingBillPrinterFragment.getUserVisibleHint()");
 //                if (settingBillPrinterFragment.getUserVisibleHint()){
-//                    SettingBillPrinterFragment.updateButtonState(true);
+//                    ReceiptPrinterFragment.updateButtonState(true);
 //                }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -158,11 +159,11 @@ public class MyUsbPrinterUtil {
     public List<UsbDevice> getUsbPrinterList() {
 
 //        if (Build.MODEL.substring(0, 3).equalsIgnoreCase("TPS")) {
-            if (this.mUsbPrinterList == null) {
-                this.mUsbPrinterList = this.findAllUsbPrinter();
-            }
+        if (this.mUsbPrinterList == null) {
+            this.mUsbPrinterList = this.findAllUsbPrinter();
+        }
 
-            return this.mUsbPrinterList;
+        return this.mUsbPrinterList;
 //        } else {
 //            Log.e("_ERROR", "ERROR--->Device is not support!  This Demo just developer for TPS device");
 //            return null;
@@ -233,7 +234,8 @@ public class MyUsbPrinterUtil {
     }
 
     /**
-     *     //发送信息 一是打印消息，切纸，打开钱箱等
+     * //发送信息 一是打印消息，切纸，打开钱箱等
+     *
      * @param content
      * @return
      */

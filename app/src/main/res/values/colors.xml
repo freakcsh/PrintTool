@@ -6,4 +6,8 @@
     <color name="white">#ffffff</color>
     <color name="colorGrayText">#979797</color>
     <color name="colorGray">#ededed</color>
+    <color name="colorTextGray">#989898</color>
+    <color name="colorGreenLight">#FFA9E781</color>
+    <color name="color_black">#000000</color>
+
 </resources>

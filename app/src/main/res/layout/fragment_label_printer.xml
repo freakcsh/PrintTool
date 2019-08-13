@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:layout_marginEnd="5pt">
+
+    <ScrollView
+        android:id="@+id/sv_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+           <!-- android:background="@drawable/bg_button_gray"-->
+            <RelativeLayout
+                android:layout_marginTop="10pt"
+                android:paddingLeft="30pt"
+                android:paddingBottom="12pt"
+                android:paddingTop="12pt"
+                android:id="@+id/rl_device_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/tv_device_name"
+                    android:textColor="@color/colorGrayText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textSize="14pt"
+                    android:text="@string/printerName"
+                    />
+
+                <!--<TextView
+                    android:textColor="@color/colorGrayText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="商品下载"
+                    android:textSize="14pt" />-->
+
+
+            </RelativeLayout>
+
+
+
+
+            <RelativeLayout
+                android:layout_marginTop="10pt"
+                android:background="@drawable/bg_button_gray"
+                android:paddingLeft="30pt"
+                android:paddingBottom="12pt"
+                android:paddingTop="12pt"
+                android:id="@+id/rl_print_connect"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true">
+
+
+                <TextView
+                    android:id="@+id/btn_connect"
+                    android:textColor="@color/colorGrayText"
+                    android:background="@null"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textSize="14pt"
+                    android:text="@string/settingactivity_print_connect"/>
+
+                <!--<TextView
+                    android:textColor="@color/colorGrayText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="商品下载"
+                    android:textSize="14pt" />-->
+
+                <TextView
+                    android:id="@+id/label_print_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:textSize="14pt"
+                    android:text="未连接"
+                    android:layout_marginRight="20pt"
+                    android:textColor="@color/colorGrayText"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/off_print"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10pt"
+                android:background="@drawable/bg_button_gray"
+                android:clickable="true"
+                android:paddingBottom="12pt"
+                android:paddingLeft="30pt"
+                android:paddingTop="12pt">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:text="断开连接"
+                    android:textColor="@color/colorGrayText"
+                    android:textSize="14pt"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/examine_print_state"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10pt"
+                android:background="@drawable/bg_button_gray"
+                android:clickable="true"
+                android:paddingBottom="12pt"
+                android:paddingLeft="30pt"
+                android:paddingTop="12pt">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:text="检查打印机状态"
+                    android:textColor="@color/colorGrayText"
+                    android:textSize="14pt"/>
+
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_marginTop="10pt"
+                android:background="@drawable/bg_button_gray"
+                android:paddingLeft="30pt"
+                android:paddingBottom="12pt"
+                android:paddingTop="12pt"
+                android:id="@+id/rl_print_test"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true">
+
+
+                <TextView
+                    android:id="@+id/btn_selfprint_test"
+                    android:textColor="@color/colorGrayText"
+                    android:background="@null"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textSize="14pt"
+                    android:text="@string/print_test"/>
+
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10pt"
+                android:background="@drawable/bg_button_gray"
+                android:clickable="true"
+                android:paddingBottom="12pt"
+                android:paddingLeft="30pt"
+                android:paddingTop="12pt">
+
+
+                <TextView
+                    android:id="@+id/btn_direction_select"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:text="反方向打印/正方向打印"
+                    android:textColor="@color/colorGrayText"
+                    android:textSize="14pt"/>
+
+
+                <Switch
+                    android:id="@+id/sw_front_reverse_printer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:switchMinWidth="35pt"
+                    android:textOff="图片"
+                    android:textOn="视频"
+                    android:textSize="15pt"
+                    android:thumb="@drawable/switch_selector"
+                    android:track="@drawable/switch_track"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</RelativeLayout>

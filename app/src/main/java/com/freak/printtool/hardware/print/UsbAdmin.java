@@ -19,6 +19,9 @@ import java.util.Iterator;
 
 /**
  * usb端口测试
+ *
+ * @author Freak
+ * @date 2019/8/13.
  */
 public class UsbAdmin {
 
@@ -149,7 +152,11 @@ public class UsbAdmin {
         return "Usb Printer Open success！";
     }
 
-    //打印连接的测试回馈
+    /**
+     * 打印连接的测试回馈
+     *
+     * @return
+     */
     public boolean getUsbStatus() {
         if (mConnection == null) {
             return false;
@@ -157,7 +164,12 @@ public class UsbAdmin {
         return true;
     }
 
-    //发送信息 一是打印消息，切纸，打开钱箱等
+    /**
+     * 发送信息 一是打印消息，切纸，打开钱箱等
+     *
+     * @param content
+     * @return
+     */
     @SuppressLint("NewApi")
     public boolean sendCommand(byte[] content) {
         boolean result;
@@ -169,10 +181,10 @@ public class UsbAdmin {
 
             if (len < 0) {
                 result = false;
-//                Log.i(TAG, "发送失败！ " + len);
+                Log.i(TAG, "发送失败！ " + len);
             } else {
                 result = true;
-//                Log.i(TAG, "发送" + len + "字节数据");
+                Log.i(TAG, "发送" + len + "字节数据");
             }
         }
         return result;
@@ -205,7 +217,7 @@ public class UsbAdmin {
                             mDevice = device;
                         }
                     } else {
-//                        Log.d(TAG, "permission denied for device " + device);
+                        Log.d(TAG, "permission denied for device " + device);
                     }
 
                 }

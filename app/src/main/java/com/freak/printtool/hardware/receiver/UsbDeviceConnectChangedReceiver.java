@@ -12,79 +12,59 @@ import com.printer.sdk.PrinterInstance;
 
 
 /**
- * Created by hboxs020 on 2017/8/9.
+ * @author Freak
+ * @date 2019/8/13.
  */
 
 public class UsbDeviceConnectChangedReceiver extends BroadcastReceiver {
 
-    //usb线的广播
+    /**
+     * usb线的广播
+     */
     private final static String TAGUSB = "android.hardware.usb.action.USB_STATE";
-
-    //外设的广播
+    /**
+     * 外设的广播
+     */
     public static final String TAGIN = "android.hardware.usb.action.USB_DEVICE_ATTACHED";
     public static final String TAGOUT = "android.hardware.usb.action.USB_DEVICE_DETACHED";
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
         String action = intent.getAction();
-
         //连接的外设
         UsbDevice device = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
-
         //外设连接状态
-        if (TAGIN.equals(action)){
+        if (TAGIN.equals(action)) {
             //连接
-            Log.d("PayMethod",device.getVendorId()+"");
-            Log.d("PayMethod",device.getProductId()+"");
-           // device.getVendorId() == 26728 && device.getProductId() == 1536
-            if (device.getVendorId() == 26728 && device.getProductId() == 1536||device.getVendorId() == 4070 && device.getProductId() == 33054||
-                    device.getVendorId() == 1155 && device.getProductId() == 1803||device.getVendorId() == 1046 && device.getProductId() == 20497 ){
+            Log.d("PayMethod", device.getVendorId() + "");
+            Log.d("PayMethod", device.getProductId() + "");
+            // device.getVendorId() == 26728 && device.getProductId() == 1536
+            if (device.getVendorId() == 26728 && device.getProductId() == 1280 || device.getVendorId() == 26728 && device.getProductId() == 1536 || device.getVendorId() == 4070 && device.getProductId() == 33054 ||
+                    device.getVendorId() == 1155 && device.getProductId() == 1803 || device.getVendorId() == 1046 && device.getProductId() == 20497) {
                 ToastUtil.shortShow("小票打印机插入");
             }
-
-
-            if (device.getVendorId() == 1155 && device.getProductId() == 22304 ){
+            if (device.getVendorId() == 1155 && device.getProductId() == 22304) {
                 ToastUtil.shortShow("标签打印机插入");
             }
         }
-
-        if (TAGOUT.equals(action)){
+        if (TAGOUT.equals(action)) {
             //断开
-            if (device.getVendorId() == 26728 && device.getProductId() == 1536||device.getVendorId() == 4070 && device.getProductId() == 33054||
-                    device.getVendorId() == 1155 && device.getProductId() == 1803||device.getVendorId() == 1046 && device.getProductId() == 20497 ){
+            if (device.getVendorId() == 26728 && device.getProductId() == 1280 || device.getVendorId() == 26728 && device.getProductId() == 1536 || device.getVendorId() == 4070 && device.getProductId() == 33054 ||
+                    device.getVendorId() == 1155 && device.getProductId() == 1803 || device.getVendorId() == 1046 && device.getProductId() == 20497) {
                 ToastUtil.shortShow("小票打印机被拔出");
-//                if (SettingBillPrinterFragment.isConnected) {
-//                     SettingBillPrinterFragment.breakPrinter();
-//                }
-//                RxBus.getDefault().post(new StateEvent(1,false));
-
             }
-
-
-            if (device.getVendorId() == 1155 && device.getProductId() == 22304 ){
-
+            if (device.getVendorId() == 1155 && device.getProductId() == 22304) {
                 ToastUtil.shortShow("标签打印机被拔出");
-//                if (PrinterInstance.mPrinter != null && SettingLabelPrinterFragment.isConnected) {
-//                    PrinterInstance.mPrinter.closeConnection();
-//                    PrinterInstance.mPrinter = null;
-//                    SettingLabelPrinterFragment.breakPrinter();
-//                }
-
-
             }
         }
-
         //USB线插拔
-        if (TAGUSB.equals(action)){
-
+        if (TAGUSB.equals(action)) {
             boolean connected = intent.getBooleanExtra("connected", false);
-
-            if (connected){
+            if (connected) {
                 //应用刚启动也会触发
-                // ToastUtil.shortShow("USB已连接");
-            }else{
-                //ToastUtil.shortShow("USB已断开");
+                ToastUtil.shortShow("USB已连接");
+            } else {
+                ToastUtil.shortShow("USB已断开");
             }
         }
     }

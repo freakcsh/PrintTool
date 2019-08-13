@@ -33,7 +33,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * @author Michael Yang（www.yangfuhai.com） update at 2013.08.07
+ * @author Freak
+ * @date 2019/8/13.
  */
 public class ACache {
     public static final int TIME_HOUR = 60 * 60;
@@ -134,7 +135,7 @@ public class ACache {
      */
     public String getAsString(String key) {
         File file = mCache.get(key);
-        if (!file.exists()){
+        if (!file.exists()) {
             return null;
         }
 
@@ -164,7 +165,7 @@ public class ACache {
                     e.printStackTrace();
                 }
             }
-            if (removeFile){
+            if (removeFile) {
                 remove(key);
             }
 
@@ -308,7 +309,7 @@ public class ACache {
         boolean removeFile = false;
         try {
             File file = mCache.get(key);
-            if (!file.exists()){
+            if (!file.exists()) {
                 return null;
             }
 
@@ -332,7 +333,7 @@ public class ACache {
                     e.printStackTrace();
                 }
             }
-            if (removeFile){
+            if (removeFile) {
                 remove(key);
             }
 
@@ -404,7 +405,7 @@ public class ACache {
                 return null;
             } finally {
                 try {
-                    if (bais != null){
+                    if (bais != null) {
                         bais.close();
                     }
 
@@ -412,7 +413,7 @@ public class ACache {
                     e.printStackTrace();
                 }
                 try {
-                    if (ois != null){
+                    if (ois != null) {
                         ois.close();
                     }
 
@@ -509,7 +510,7 @@ public class ACache {
      */
     public File file(String key) {
         File f = mCache.newFile(key);
-        if (f.exists()){
+        if (f.exists()) {
             return f;
         }
 
@@ -766,7 +767,7 @@ public class ACache {
 
         private static byte[] copyOfRange(byte[] original, int from, int to) {
             int newLength = to - from;
-            if (newLength < 0){
+            if (newLength < 0) {
                 throw new IllegalArgumentException(from + " > " + to);
             }
 
@@ -789,6 +790,7 @@ public class ACache {
 
         /**
          * Bitmap → byte[]
+         *
          * @param bm
          * @return
          */
@@ -804,6 +806,7 @@ public class ACache {
 
         /**
          * byte[] → Bitmap
+         *
          * @param b
          * @return
          */
@@ -816,7 +819,8 @@ public class ACache {
 
 
         /**
-         *  Drawable → Bitmap
+         * Drawable → Bitmap
+         *
          * @param drawable
          * @return
          */

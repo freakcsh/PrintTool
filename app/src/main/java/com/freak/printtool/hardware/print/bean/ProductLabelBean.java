@@ -11,8 +11,8 @@ package com.freak.printtool.hardware.print.bean;
 /**
  * 增加自定义编码
  *
- * @anthor dmin
- * created at 2017/9/21 11:38
+ * @author Freak
+ * @date 2019/8/13.
  */
 
 public class ProductLabelBean {

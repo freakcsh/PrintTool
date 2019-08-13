@@ -2,7 +2,8 @@ package com.freak.printtool.hardware.print.bean;
 
 
 /**
- * Created by hboxs028 on 2018/2/2.
+ * @author Freak
+ * @date 2019/8/13.
  */
 
 public class MemberRechargePrintBean implements PrintfBean{

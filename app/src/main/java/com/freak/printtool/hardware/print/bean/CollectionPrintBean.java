@@ -9,8 +9,8 @@ import java.util.ArrayList;
 /**
  * 增加子项的支付方式，用来判断是否有优惠
  *
- * @anthor dmin
- * created at 2017/9/13 10:44
+ * @author Freak
+ * @date 2019/8/13.
  */
 public class CollectionPrintBean implements PrintfBean {
     /**

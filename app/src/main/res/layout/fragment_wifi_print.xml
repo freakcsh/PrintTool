@@ -1,0 +1,102 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/rl_device_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10pt"
+        android:clickable="true"
+        android:paddingBottom="12pt"
+        android:paddingLeft="30pt"
+        android:paddingTop="12pt">
+
+        <TextView
+            android:id="@+id/wifi_device_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/printerName"
+            android:textColor="@color/colorGrayText"
+            android:textSize="14pt" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/wifi_print_connect"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10pt"
+        android:background="@drawable/bg_button_gray"
+        android:clickable="true"
+        android:paddingBottom="12pt"
+        android:paddingLeft="30pt"
+        android:paddingTop="12pt">
+
+
+        <TextView
+            android:id="@+id/btn_wifi_connect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:text="@string/receipt_print_connect"
+            android:textColor="@color/colorGrayText"
+            android:textSize="14pt" />
+
+        <TextView
+            android:id="@+id/wifi_print_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20pt"
+            android:text="未连接"
+            android:textColor="@color/colorGrayText"
+            android:textSize="14pt" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/wifi_off_print"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10pt"
+        android:background="@drawable/bg_button_gray"
+        android:clickable="true"
+        android:paddingBottom="12pt"
+        android:paddingLeft="30pt"
+        android:paddingTop="12pt">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:text="断开连接"
+            android:textColor="@color/colorGrayText"
+            android:textSize="14pt" />
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/wifi_print_test"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10pt"
+        android:background="@drawable/bg_button_gray"
+        android:clickable="true"
+        android:paddingBottom="12pt"
+        android:paddingLeft="30pt"
+        android:paddingTop="12pt">
+
+        <TextView
+            android:id="@+id/wifi_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:text="@string/print_test"
+            android:textColor="@color/colorGrayText"
+            android:textSize="14pt" />
+    </RelativeLayout>
+</LinearLayout>

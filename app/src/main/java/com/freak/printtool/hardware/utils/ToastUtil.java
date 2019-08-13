@@ -111,8 +111,10 @@ import com.freak.printtool.hardware.app.App;
 
 
 /**
- * Created by codeest on 2016/8/4.
  * 自定义toast格式
+ *
+ * @author Freak
+ * @date 2019/8/13.
  */
 public class ToastUtil {
 

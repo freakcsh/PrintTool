@@ -1,60 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/white">
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:textSize="25sp"
-        android:textColor="@color/white"
-        android:text="请选择要连接的设备"
-        android:padding="15dp"
-        android:gravity="center"/>
-
-    <ListView
-        android:id="@+id/paired_devices"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:layout_marginTop="3dp"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
-
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:orientation="vertical"
+        android:background="@color/white">
 
-        <Button
-            android:id="@+id/button_scan"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:textColor="@color/colorPrimary"
-            android:background="@null"
-            android:textSize="25sp"
-            android:text="@string/label_new_devices" />
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:padding="15pt"
+            android:text="请选择要连接的设备"
+            android:textColor="@color/white"
+            android:textSize="14pt" />
 
-        <Button
-            android:id="@+id/button_bace"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <ListView
+            android:id="@+id/paired_devices"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:textColor="#c9c9c9"
-            android:background="@null"
-            android:textSize="25sp"
-            android:text="取消" />
+            android:layout_marginTop="3pt"
+            android:paddingTop="20pt"
+            android:paddingBottom="20pt" />
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_scan"
+                android:layout_width="0pt"
+                android:layout_height="wrap_content"
+                android:layout_margin="10pt"
+                android:layout_weight="1"
+                android:background="@null"
+                android:text="@string/label_new_devices"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14pt" />
+
+            <Button
+                android:id="@+id/button_bace"
+                android:layout_width="0pt"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10pt"
+                android:layout_marginRight="10pt"
+                android:layout_weight="1"
+                android:background="@null"
+                android:text="取消"
+                android:textColor="#c9c9c9"
+                android:textSize="14pt" />
+
+        </LinearLayout>
     </LinearLayout>
-
 
 </LinearLayout>
