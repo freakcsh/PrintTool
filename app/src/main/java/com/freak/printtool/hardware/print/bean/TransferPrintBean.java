@@ -7,7 +7,7 @@ package com.freak.printtool.hardware.print.bean;
  */
 
 public class TransferPrintBean implements PrintfBean {
-    //抬头是 酒茶生交接班单据
+    //抬头是 交接班单据
     //门店名
     private String shopName;
     //收银员ID 改成工号

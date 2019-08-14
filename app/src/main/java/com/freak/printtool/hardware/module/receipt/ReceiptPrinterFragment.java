@@ -20,7 +20,7 @@ import com.freak.printtool.R;
 import com.freak.printtool.hardware.app.App;
 import com.freak.printtool.hardware.app.Constants;
 import com.freak.printtool.hardware.module.label.PrefUtils;
-import com.freak.printtool.hardware.print.UsbAdmin;
+import com.freak.printtool.hardware.module.nosdkprint.UsbAdmin;
 import com.freak.printtool.hardware.module.receipt.printreceipt.MyUsbPrinterUtil;
 import com.freak.printtool.hardware.module.receipt.printreceipt.PrintCategory;
 import com.freak.printtool.hardware.module.receipt.printreceipt.PrintReceipt;
@@ -187,17 +187,20 @@ public class ReceiptPrinterFragment extends Fragment implements OnClickListener 
         if (usbPrinter == null) {
             myUsbPrinterUtil = new MyUsbPrinterUtil(mContext);
             mpPrintCategory = new PrintCategory();
-            devices = myUsbPrinterUtil.getUsbPrinterList();//获取所有打印设备
+            //获取所有打印设备
+            devices = myUsbPrinterUtil.getUsbPrinterList();
             receiptDeviceList = new ArrayList<>();
             for (UsbDevice usbDevice : devices) {
 
                 if (MyUsbPrinterUtil.isUsbPrinterDevice(usbDevice)) {
-                    myUsbPrinterUtil.requestPermission(usbDevice, null);//请求权限
+                    //请求权限
+                    myUsbPrinterUtil.requestPermission(usbDevice, null);
                     /**
                      * 优库打印机：pid=33054 vid=4070
                      * 君时达打印机：pid=1803 vid=1155
                      * 票据打印机：pid=20497 vid=1046
                      * 佳博打印机：pid=1536 vid=26728
+                     * 佳博wifi+usb打印机：pid=1280 vid=26728
                      */
                     if (usbDevice.getVendorId() == 26728 && usbDevice.getProductId() == 1280 || usbDevice.getVendorId() == 26728 && usbDevice.getProductId() == 1536 || usbDevice.getVendorId() == 4070 && usbDevice.getProductId() == 33054 ||
                             usbDevice.getVendorId() == 1155 && usbDevice.getProductId() == 1803 || usbDevice.getVendorId() == 1046 && usbDevice.getProductId() == 20497) {
@@ -219,7 +222,8 @@ public class ReceiptPrinterFragment extends Fragment implements OnClickListener 
             }
 
             try {
-                usbPrinter = new UsbPrinter(mContext, receiptUSBDevice);//打印对象
+                //打印对象
+                usbPrinter = new UsbPrinter(mContext, receiptUSBDevice);
                 /**
                  * 设置全局变量
                  */
@@ -235,7 +239,9 @@ public class ReceiptPrinterFragment extends Fragment implements OnClickListener 
         }
     }
 
-    // 用于接受连接状态消息的 Handler
+    /**
+     * 用于接受连接状态消息的 Handler
+     */
     @SuppressLint("HandlerLeak")
     public static Handler receiptHandler = new Handler() {
         @SuppressLint("ShowToast")

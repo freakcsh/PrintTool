@@ -70,6 +70,38 @@
                     android:textColor="@color/colorTextGray"
                     android:textSize="14pt" />
 
+                <TextView
+                    android:id="@+id/tv_barcode_scanner"
+                    android:layout_width="120pt"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2pt"
+                    android:background="@drawable/gray_green_selector"
+                    android:clickable="true"
+                    android:drawablePadding="10pt"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:paddingStart="10pt"
+                    android:paddingTop="10pt"
+                    android:paddingBottom="10pt"
+                    android:text="扫码枪"
+                    android:textColor="@color/colorTextGray"
+                    android:textSize="14pt" />
+                <TextView
+                    android:id="@+id/tv_no_sdk_print"
+                    android:layout_width="120pt"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2pt"
+                    android:background="@drawable/gray_green_selector"
+                    android:clickable="true"
+                    android:drawablePadding="10pt"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:paddingStart="10pt"
+                    android:paddingTop="10pt"
+                    android:paddingBottom="10pt"
+                    android:text="无sdk小票打印"
+                    android:textColor="@color/colorTextGray"
+                    android:textSize="14pt" />
             </LinearLayout>
 
         </ScrollView>

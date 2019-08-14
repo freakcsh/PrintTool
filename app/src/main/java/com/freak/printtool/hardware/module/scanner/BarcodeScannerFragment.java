@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -22,12 +23,15 @@ import com.freak.printtool.R;
 public class BarcodeScannerFragment extends Fragment {
     private TextView text_view_scan;
     private EditText edt;
+    private StringBuilder mStringBuilder;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_barcode_scanner, container, false);
         text_view_scan = view.findViewById(R.id.text_view_scan);
         edt = view.findViewById(R.id.edt);
+        mStringBuilder = new StringBuilder();
         //这是小键盘输入
         edt.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -53,6 +57,12 @@ public class BarcodeScannerFragment extends Fragment {
                         || actionId == EditorInfo.IME_ACTION_DONE
                         || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())) {
                     Log.e("TAG", "扫码结束");
+                    if (!TextUtils.isEmpty(edt.getText().toString())) {
+                        mStringBuilder.append(edt.getText().toString().trim() + "\n");
+                        text_view_scan.setText(mStringBuilder);
+                        edt.setText("");
+                    }
+
                 }
                 return false;
             }

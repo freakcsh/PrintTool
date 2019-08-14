@@ -14,12 +14,16 @@ import android.widget.Toast;
 
 
 import com.freak.printtool.R;
+import com.freak.printtool.hardware.app.App;
 import com.freak.printtool.hardware.base.IActivityStatusBar;
+import com.freak.printtool.hardware.module.nosdkprint.NoSdkPrintFragment;
 import com.freak.printtool.hardware.module.receipt.ReceiptPrinterFragment;
 import com.freak.printtool.hardware.module.label.LabelPrinterFragment;
-import com.freak.printtool.hardware.module.scanner.BarcodeScannerActivity;
+import com.freak.printtool.hardware.module.scanner.BarcodeScannerFragment;
 import com.freak.printtool.hardware.module.scanner.BarcodeScannerResolver;
 import com.freak.printtool.hardware.module.wifi.WifiPrintFragment;
+
+import static com.freak.printtool.hardware.app.App.DESIGN_WIDTH;
 
 /**
  * 这是新页面，增加了测试打印机
@@ -41,12 +45,16 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
      * wifi打印机
      */
     private TextView tvWifiPrint;
+    private TextView mTvBarcodeScanner;
+    private TextView mTvNoSdkPrint;
     /**
      * fragment的对象
      */
     private ReceiptPrinterFragment mReceiptPrinterFragment;
     private LabelPrinterFragment mLabelPrinterFragment;
     private WifiPrintFragment mWifiPrintFragment;
+    private BarcodeScannerFragment mBarcodeScannerFragment;
+    private NoSdkPrintFragment mNoSdkPrintFragment;
     /**
      * 扫码枪工具类
      */
@@ -59,6 +67,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //pt屏幕适配，没有baseActivity或者启动页，加载页面过快会导致适配失败
+        App.resetDensity(getApplicationContext(), DESIGN_WIDTH);
+        App.resetDensity(this, DESIGN_WIDTH);
         setContentView(R.layout.activity_main);
         super.onCreate(savedInstanceState);
         fManager = getSupportFragmentManager();
@@ -66,9 +77,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         tvReceiptPrinter = (TextView) findViewById(R.id.tv_receipt);
         tvWifiPrint = (TextView) findViewById(R.id.tv_wifi);
         tvLabelPrint = (TextView) findViewById(R.id.tv_label);
+        mTvBarcodeScanner = (TextView) findViewById(R.id.tv_barcode_scanner);
+        mTvNoSdkPrint = (TextView) findViewById(R.id.tv_no_sdk_print);
         tvReceiptPrinter.setOnClickListener(this);
         tvLabelPrint.setOnClickListener(this);
         tvWifiPrint.setOnClickListener(this);
+        mTvBarcodeScanner.setOnClickListener(this);
+        mTvNoSdkPrint.setOnClickListener(this);
         setChoiceItem(0);
     }
 
@@ -87,6 +102,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             //wifi打印机
             case R.id.tv_wifi:
                 setChoiceItem(2);
+                break;
+            //扫码枪
+            case R.id.tv_barcode_scanner:
+                setChoiceItem(3);
+                break;
+            //无sdk打印
+            case R.id.tv_no_sdk_print:
+                setChoiceItem(4);
                 break;
             default:
                 break;
@@ -116,9 +139,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                 tvReceiptPrinter.setSelected(true);
                 tvLabelPrint.setSelected(false);
                 tvWifiPrint.setSelected(false);
+                mTvBarcodeScanner.setSelected(false);
+                mTvNoSdkPrint.setSelected(false);
+                mTvNoSdkPrint.setTextColor(ContextCompat.getColor(this, R.color.colorTextGray));
                 tvWifiPrint.setTextColor(ContextCompat.getColor(this, R.color.colorTextGray));
                 tvReceiptPrinter.setTextColor(ContextCompat.getColor(this, R.color.white));
                 tvLabelPrint.setTextColor(ContextCompat.getColor(this, R.color.colorTextGray));
+                mTvBarcodeScanner.setTextColor(ContextCompat.getColor(this, R.color.colorTextGray));
                 break;
             //标签机设置
             case 1:
@@ -133,9 +160,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                 tvLabelPrint.setSelected(true);
                 tvReceiptPrinter.setSelected(false);
                 tvWifiPrint.setSelected(false);
+                mTvBarcodeScanner.setSelected(false);
+                mTvNoSdkPrint.setSelected(false);
+                mTvNoSdkPrint.setTextColor(ContextCompat.getColor(this, R.color.colorTextGray));
                 tvWifiPrint.setTextColor(ContextCompat.getColor(this, R.color.colorTextGray));
                 tvLabelPrint.setTextColor(ContextCompat.getColor(this, R.color.white));
                 tvReceiptPrinter.setTextColor(ContextCompat.getColor(this, R.color.colorTextGray));
+                mTvBarcodeScanner.setTextColor(ContextCompat.getColor(this, R.color.colorTextGray));
                 break;
             case 2:
                 if (mWifiPrintFragment == null) {
@@ -150,11 +181,56 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                 tvLabelPrint.setSelected(false);
                 tvReceiptPrinter.setSelected(false);
                 tvWifiPrint.setSelected(true);
+                mTvBarcodeScanner.setSelected(false);
+                mTvNoSdkPrint.setSelected(false);
+                mTvNoSdkPrint.setTextColor(ContextCompat.getColor(this, R.color.colorTextGray));
                 tvWifiPrint.setTextColor(ContextCompat.getColor(this, R.color.white));
                 tvLabelPrint.setTextColor(ContextCompat.getColor(this, R.color.colorTextGray));
                 tvReceiptPrinter.setTextColor(ContextCompat.getColor(this, R.color.colorTextGray));
+                mTvBarcodeScanner.setTextColor(ContextCompat.getColor(this, R.color.colorTextGray));
                 break;
             case 3:
+                if (mBarcodeScannerFragment == null) {
+                    //为空，创建并添加
+                    mBarcodeScannerFragment = new BarcodeScannerFragment();
+                    transaction.add(R.id.fg_content, mBarcodeScannerFragment);
+                } else {
+                    // 如果不为空，显示
+                    transaction.show(mBarcodeScannerFragment);
+                }
+                //设置选中颜色
+                tvLabelPrint.setSelected(false);
+                tvReceiptPrinter.setSelected(false);
+                tvWifiPrint.setSelected(false);
+                mTvBarcodeScanner.setSelected(true);
+                mTvNoSdkPrint.setSelected(false);
+                mTvNoSdkPrint.setTextColor(ContextCompat.getColor(this, R.color.colorTextGray));
+                mTvBarcodeScanner.setTextColor(ContextCompat.getColor(this, R.color.white));
+                tvWifiPrint.setTextColor(ContextCompat.getColor(this, R.color.colorTextGray));
+                tvLabelPrint.setTextColor(ContextCompat.getColor(this, R.color.colorTextGray));
+                tvReceiptPrinter.setTextColor(ContextCompat.getColor(this, R.color.colorTextGray));
+
+                break;
+            case 4:
+                if (mNoSdkPrintFragment == null) {
+                    //为空，创建并添加
+                    mNoSdkPrintFragment = new NoSdkPrintFragment();
+                    transaction.add(R.id.fg_content, mNoSdkPrintFragment);
+                } else {
+                    // 如果不为空，显示
+                    transaction.show(mNoSdkPrintFragment);
+                }
+                //设置选中颜色
+                tvLabelPrint.setSelected(false);
+                tvReceiptPrinter.setSelected(false);
+                tvWifiPrint.setSelected(false);
+                mTvBarcodeScanner.setSelected(false);
+                mTvNoSdkPrint.setSelected(true);
+                mTvNoSdkPrint.setTextColor(ContextCompat.getColor(this, R.color.white));
+                mTvBarcodeScanner.setTextColor(ContextCompat.getColor(this, R.color.colorTextGray));
+                tvWifiPrint.setTextColor(ContextCompat.getColor(this, R.color.colorTextGray));
+                tvLabelPrint.setTextColor(ContextCompat.getColor(this, R.color.colorTextGray));
+                tvReceiptPrinter.setTextColor(ContextCompat.getColor(this, R.color.colorTextGray));
                 break;
             default:
                 break;
@@ -174,6 +250,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         }
         if (mLabelPrinterFragment != null) {
             transaction.hide(mLabelPrinterFragment);
+        }
+        if (mWifiPrintFragment != null) {
+            transaction.hide(mWifiPrintFragment);
+        }
+        if (mBarcodeScannerFragment != null) {
+            transaction.hide(mBarcodeScannerFragment);
+        }
+        if (mNoSdkPrintFragment != null) {
+            transaction.hide(mNoSdkPrintFragment);
         }
     }
 

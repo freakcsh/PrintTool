@@ -1,4 +1,4 @@
-package com.freak.printtool.hardware.print;
+package com.freak.printtool.hardware.module.nosdkprint;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -34,21 +34,10 @@ public class HardwareUtil {
     public static final int TYPE_WEB_ORDER = 1;
     public static final int TYPE_VIP_CARD = 2;
     public static final int TYPE_TRANSFER = 3;
-    public static final int TYPE_STOCK = 4;
-    public static final int MEMBER_RECHARGE = 5;
 
-    //这是现金支付
-    public static final int PAY_CASH = 0;
-    //这是微信支付
-    public static final int PAY_WEIXIN = 1;
-    //这是刷卡支付
-    public static final int PAY_POS = 2;
-    //组合支付
-    public static final int PAY_COMBINATION = 3;
-
-    public static final int PAY_BALANCE = 4;
-
-    /* 设备是否连接 */
+    /**
+     * 设备是否连接
+     */
     public static boolean isConnected(UsbAdmin mUsbAdmin) {
         mUsbAdmin.openUsb();
 
@@ -59,10 +48,10 @@ public class HardwareUtil {
         }
     }
 
-    /* 是否能打印 */
+    /**
+     * 是否能打印
+     */
     public static boolean isPrintfData(PrintfBean content, UsbAdmin mUsbAdmin, int type) {
-
-
         Boolean print = (Boolean) ACache.get(App.getInstance().getApplicationContext()).getAsObject(Constants.WHETHER_PRINT);
         Log.d("HardwareUtil", "是否打印" + print);
         if (print != null && !print) {
@@ -102,7 +91,9 @@ public class HardwareUtil {
         }
     }
 
-    /* 是否能打印 */
+    /**
+     * 是否能打印
+     */
     public static boolean isPrintfData(PrintfBean content, UsbAdmin mUsbAdmin) {
 
         boolean print = (boolean) ACache.get(App.getInstance().getApplicationContext()).getAsObject(Constants.WHETHER_PRINT);
@@ -110,15 +101,11 @@ public class HardwareUtil {
         if (!print) {
             return false;
         }
-
         byte[] data = new byte[1024];
         String cmd = "";
         try {
-
             cmd = stockFlowFormat((StockFlowPrintBean) content);
-
             data = cmd.getBytes("GBK");
-
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -130,7 +117,9 @@ public class HardwareUtil {
         return mUsbAdmin.sendCommand(data) && mUsbAdmin.sendCommand(PRINTF_CUT);
     }
 
-    /* 是否能打印 */
+    /**
+     * 是否能打印
+     */
     public static boolean isPrintfData(String content, UsbAdmin mUsbAdmin) {
 
         boolean print = (boolean) ACache.get(App.getInstance().getApplicationContext()).getAsObject(Constants.WHETHER_PRINT);
@@ -138,7 +127,6 @@ public class HardwareUtil {
         if (!print) {
             return false;
         }
-
         byte[] data = new byte[1024];
         try {
             String cmd = testFormat();
@@ -146,7 +134,6 @@ public class HardwareUtil {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-
         if (mUsbAdmin.sendCommand(data) && mUsbAdmin.sendCommand(PRINTF_CUT)) {
             return true;
         } else {
@@ -164,7 +151,6 @@ public class HardwareUtil {
         boolean canPush = false;
         mUsbAdmin.openUsb();
         mUsbAdmin.getUsbStatus();
-
         if (mUsbAdmin.sendCommand(PUSH_CASH)) {
             canPush = true;
         } else {
@@ -183,8 +169,6 @@ public class HardwareUtil {
         String price = "";
         String num = "";
         String promotionPrice = "";
-
-
         /**
          * 这是打印
          * */
@@ -211,7 +195,7 @@ public class HardwareUtil {
 
         }
 
-        dataStr = "      酒茶生云收银销售单据\n" +
+        dataStr = "      云收银销售单据\n" +
                 cmdEnter() +
                 "门  店:" + content.getShopName() +
                 cmdEnter() +
@@ -309,11 +293,8 @@ public class HardwareUtil {
                 }
             }
         }
-
-
         String remark = TextUtils.isEmpty(stockFlowPrintBean.getRemark()) ? "散秤商品默认数量为一件" : stockFlowPrintBean.getRemark();
-
-        printString = "\t酒茶生云收银收货单据\n" +
+        printString = "\t云收银收货单据\n" +
                 cmdEnter() +
                 "门  店:" + stockFlowPrintBean.getShopName() +
                 cmdEnter() +
@@ -339,9 +320,7 @@ public class HardwareUtil {
                 cmdEnter() +
                 "门店地址:" + stockFlowPrintBean.getAddress() + "\n" +
                 cmdEnter();
-
         return printString;
-
     }
 
 
@@ -353,8 +332,7 @@ public class HardwareUtil {
         String dataStr = null;
         String productListStr = "";
         String productName = "";
-
-        dataStr = "    酒茶生云收银交接班单据\n" +
+        dataStr = "    云收银交接班单据\n" +
                 cmdEnter() +
                 "编号:" + content.getSn() + "\n" +
                 cmdEnter() +
@@ -440,7 +418,7 @@ public class HardwareUtil {
 //                    + content.getProductItemses().get(i).getTotal() + cmdEnter();
         }
 
-        dataStr = "\t酒茶生VIP卡购买单据\n" +
+        dataStr = "\tVIP卡购买单据\n" +
                 cmdEnter() +
                 "门  店:" + content.getShopName() +
                 cmdEnter() +
@@ -495,7 +473,7 @@ public class HardwareUtil {
                     + content.getProductItemses().get(i).getTotal() + cmdEnter();
         }
 
-        dataStr = "    酒茶生云收银网络单据\n" +
+        dataStr = "    云收银网络单据\n" +
                 cmdEnter() +
                 "门  店:" + content.getShopName() +
                 cmdEnter() +
@@ -567,7 +545,7 @@ public class HardwareUtil {
                 + price
                 + num
                 + content.getPrice() + cmdEnter();
-        dataStr = "      酒茶生云收银会员充值单据\n" +
+        dataStr = "      云收银会员充值单据\n" +
                 cmdEnter() +
                 "门  店:" + content.getShopName() +
                 cmdEnter() +
@@ -618,7 +596,7 @@ public class HardwareUtil {
                     + "   " + content.getStockFlowToPrintList().get(i).getUnit() + cmdEnter();
         }
 
-        dataStr = "      酒茶生云收银收货单据\n" +
+        dataStr = "      云收银收货单据\n" +
                 cmdEnter() +
                 "门  店:" + content.getShopName() +
                 cmdEnter() +

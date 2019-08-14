@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_toolbar" />
+
+    <LinearLayout
+        android:id="@+id/ll_printer_on_or_off"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="44pt"
+            android:background="#ffffff">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:paddingLeft="45pt"
+                android:text="打印机"
+                android:textColor="#404040"
+                android:textSize="14pt" />
+
+            <ImageView
+                android:layout_width="51pt"
+                android:layout_height="34pt"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="15pt"
+                android:layout_marginRight="15pt"
+                android:background="@drawable/icon_printer_switch_select" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="315pt"
+            android:layout_height="1pt"
+            android:layout_marginLeft="45pt"
+            android:background="#e6e6e6" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_printer_list_visible_or_gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50pt"
+            android:background="#f5f5f5"
+            android:gravity="center_vertical"
+            android:paddingLeft="16pt"
+            android:text="选取打印机..."
+            android:textSize="12pt" />
+
+        <LinearLayout
+            android:id="@+id/ll_hand_add_printer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44pt"
+                android:background="#ffffff">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:paddingLeft="45pt"
+                    android:text="打印机手动添加"
+                    android:textColor="#404040"
+                    android:textSize="14pt" />
+
+                <View
+                    android:layout_width="9pt"
+                    android:layout_height="15pt"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginEnd="15pt"
+                    android:layout_marginRight="15pt"
+                    android:background="@mipmap/ic_next_gray" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="315pt"
+                android:layout_height="1pt"
+                android:layout_marginLeft="45pt"
+                android:background="#e6e6e6" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_printer_test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="44pt"
+                android:layout_centerVertical="true"
+                android:background="#ffffff"
+                android:gravity="center_vertical"
+                android:paddingLeft="45pt"
+                android:text="打印测试"
+                android:textColor="#404040"
+                android:textSize="14pt" />
+
+
+            <View
+                android:layout_width="315pt"
+                android:layout_height="1pt"
+                android:layout_marginLeft="45pt"
+                android:background="#e6e6e6" />
+        </LinearLayout>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/printer_recycle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,51 +1,54 @@
 package com.freak.printtool.hardware.module.wifi;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.freak.printtool.R;
 import com.freak.printtool.hardware.app.App;
+import com.freak.printtool.hardware.base.IActivityStatusBar;
 import com.freak.printtool.hardware.module.wifi.adapter.PrinterSettingAdapter;
 import com.freak.printtool.hardware.module.wifi.adapter.bean.PrinterSettingBean;
-import com.freak.printtool.hardware.module.wifi.printerutil.SocketPrint;
+import com.freak.printtool.hardware.module.wifi.addprinter.AddPrinterActivity;
 import com.freak.printtool.hardware.module.wifi.util.SearchPrinterUtil;
 import com.freak.printtool.hardware.utils.DialogUtil;
 import com.freak.printtool.hardware.utils.LogUtil;
 import com.freak.printtool.hardware.utils.SharedPreferencesUtils;
-import com.freak.printtool.hardware.utils.ThreadPoolProxyFactory;
 import com.freak.printtool.hardware.utils.ToastUtil;
 import com.orhanobut.logger.Logger;
+
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 import static com.freak.printtool.hardware.module.wifi.addprinter.AddPrinterActivity.ADD_PRINTER_REQUEST_CODE;
 import static com.freak.printtool.hardware.module.wifi.addprinter.AddPrinterActivity.ADD_PRINTER_RESULT_CODE;
 
+
 /**
+ * 打印机设置
+ *
  * @author Freak
  * @date 2019/8/13.
  */
-public class WifiPrintFragment extends Fragment implements View.OnClickListener {
-    private RelativeLayout wifi_print_connect, wifi_hand_add_printer, wifi_test, wifi_no_sdk_print_test, wifi_off_print;
-    private RecyclerView wifi_printer_recycle;
+public class PrinterSettingActivity extends AppCompatActivity implements IActivityStatusBar, View.OnClickListener {
+    private LinearLayout mLlPrinterOnOrOff, mLlPrinterListVisibleOrGone, mLlHandAddPrinter, mLlPrinterTest;
+    private RecyclerView mPrinterRecycle;
     private boolean isPrinterOn = false;
     private boolean isVoiceOn = false;
     private PrinterSettingAdapter mPrinterSettingAdapter;
@@ -65,57 +68,58 @@ public class WifiPrintFragment extends Fragment implements View.OnClickListener 
      */
     private boolean isOpenPrinter, isOpenVoice;
     private static int count;
-    private static ThreadPoolProxyFactory sThreadPoolProxyFactory;
-    private SocketPrint socketPrint;
 
-    @Nullable
+
+    public static void startAction(Context context) {
+        Intent intent = new Intent();
+        intent.setClass(context, PrinterSettingActivity.class);
+        context.startActivity(intent);
+    }
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_wifi_print, container, false);
-        App.getPrinterUtilInstance();
+    protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_printer_setting);
+        super.onCreate(savedInstanceState);
+        setTitle("打印机");
+        initView();
+    }
+
+    public void initView() {
         mList = new ArrayList<>();
-        wifi_print_connect = view.findViewById(R.id.wifi_print_connect);
-        wifi_test = view.findViewById(R.id.wifi_print_test);
-        wifi_hand_add_printer = view.findViewById(R.id.wifi_hand_add_printer);
-        wifi_printer_recycle = view.findViewById(R.id.wifi_printer_recycle);
-        wifi_no_sdk_print_test = view.findViewById(R.id.wifi_no_sdk_print_test);
-        wifi_off_print = view.findViewById(R.id.wifi_off_print);
-        wifi_print_connect.setOnClickListener(this);
-        wifi_hand_add_printer.setOnClickListener(this);
-        wifi_test.setOnClickListener(this);
-        wifi_no_sdk_print_test.setOnClickListener(this);
-        wifi_off_print.setOnClickListener(this);
+        mLlPrinterOnOrOff = findViewById(R.id.ll_printer_on_or_off);
+        mLlPrinterListVisibleOrGone = findViewById(R.id.ll_printer_list_visible_or_gone);
+        mLlPrinterTest = findViewById(R.id.ll_printer_test);
+        mLlHandAddPrinter = findViewById(R.id.ll_hand_add_printer);
+        mPrinterRecycle = findViewById(R.id.printer_recycle);
+        mLlPrinterOnOrOff.setOnClickListener(this);
+        mLlHandAddPrinter.setOnClickListener(this);
+        mLlPrinterTest.setOnClickListener(this);
 
         if (isOpenPrinter) {
-            wifi_print_connect.setSelected(true);
+            mLlPrinterOnOrOff.setSelected(true);
+            mLlPrinterListVisibleOrGone.setVisibility(View.VISIBLE);
             isPrinterOn = true;
             mList.clear();
             searchPrinter();
         } else {
-            wifi_print_connect.setSelected(false);
+            mLlPrinterOnOrOff.setSelected(false);
+            mLlPrinterListVisibleOrGone.setVisibility(View.GONE);
             isPrinterOn = false;
         }
         mList.clear();
         initRecycleView();
-        return view;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        App.getPrinterUtilInstance().printerOnDestroy();
     }
 
     private String getIpAddress() {
-        return SharedPreferencesUtils.getString(getActivity(), SharedPreferencesUtils.Printer_IP_Address);
+        return SharedPreferencesUtils.getString(this, SharedPreferencesUtils.Printer_IP_Address);
     }
 
     private void initRecycleView() {
-        wifi_printer_recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mPrinterRecycle.setLayoutManager(new LinearLayoutManager(this));
         mPrinterSettingAdapter = new PrinterSettingAdapter(R.layout.layout_list_item_printer_ip_address, mList);
-        mPrinterSettingAdapter.bindToRecyclerView(wifi_printer_recycle);
+        mPrinterSettingAdapter.bindToRecyclerView(mPrinterRecycle);
         mPrinterSettingAdapter.setEmptyView(R.layout.layout_no_data);
-        wifi_printer_recycle.setAdapter(mPrinterSettingAdapter);
+        mPrinterRecycle.setAdapter(mPrinterSettingAdapter);
         mPrinterSettingAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, final int position) {
@@ -136,7 +140,7 @@ public class WifiPrintFragment extends Fragment implements View.OnClickListener 
             }
         }
         mPrinterSettingAdapter.notifyDataSetChanged();
-        SharedPreferencesUtils.save(getActivity(), SharedPreferencesUtils.Printer_IP_Address, mList.get(position).getIp());
+        SharedPreferencesUtils.save(PrinterSettingActivity.this, SharedPreferencesUtils.Printer_IP_Address, mList.get(position).getIp());
         new Thread() {
             @Override
             public void run() {
@@ -160,43 +164,40 @@ public class WifiPrintFragment extends Fragment implements View.OnClickListener 
         }.start();
     }
 
+    @Override
+    public int getStatusBarColor() {
+        return ContextCompat.getColor(this, R.color.colorPrimary);
+    }
+
+    @Override
+    public int getDrawableStatusBar() {
+        return 0;
+    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             //打印机
-            case R.id.wifi_print_connect:
+            case R.id.ll_printer_on_or_off:
                 if (isPrinterOn) {
-                    wifi_print_connect.setSelected(false);
-
+                    mLlPrinterOnOrOff.setSelected(false);
+                    mLlPrinterListVisibleOrGone.setVisibility(View.GONE);
                     isPrinterOn = false;
-                    SharedPreferencesUtils.save(getActivity(), SharedPreferencesUtils.Printer_Open_Status, false);
+                    SharedPreferencesUtils.save(this, SharedPreferencesUtils.Printer_Open_Status, false);
                 } else {
-                    wifi_print_connect.setSelected(true);
-
+                    mLlPrinterOnOrOff.setSelected(true);
+                    mLlPrinterListVisibleOrGone.setVisibility(View.VISIBLE);
                     isPrinterOn = true;
-                    SharedPreferencesUtils.save(getActivity(), SharedPreferencesUtils.Printer_Open_Status, true);
-                    SharedPreferencesUtils.save(getActivity(), SharedPreferencesUtils.Printer_IP_Address, "");
+                    SharedPreferencesUtils.save(this, SharedPreferencesUtils.Printer_Open_Status, true);
+                    SharedPreferencesUtils.save(this, SharedPreferencesUtils.Printer_IP_Address, "");
                     mList.clear();
                     searchPrinter();
                 }
                 break;
-            case R.id.wifi_hand_add_printer:
-//                AddPrinterActivity.startAction(getActivity());
+            case R.id.ll_hand_add_printer:
+                AddPrinterActivity.startAction(this);
                 break;
-            case R.id.wifi_off_print:
-                App.getPrinterUtilInstance().disConnectToDevice();
-                break;
-            //使用socket打印，不使用sdk
-            case R.id.wifi_no_sdk_print_test:
-                ThreadPoolProxyFactory.getNormalThreadPoolProxy().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        socketPrint=new SocketPrint("192.168.1.100",9100,"GB2312");
-                    }
-                });
-                break;
-            case R.id.wifi_print_test:
+            case R.id.ll_printer_test:
                 LogUtil.e("ip地址--》" + getIpAddress());
                 checkLinStatusBeforePrint(getIpAddress(), 9100);
                 break;
@@ -237,15 +238,24 @@ public class WifiPrintFragment extends Fragment implements View.OnClickListener 
             //连接成功
             case 3:
                 count = 0;
-                ThreadPoolProxyFactory.getNormalThreadPoolProxy().execute(new Runnable() {
+                new Thread() {
                     @Override
                     public void run() {
-                        App.getPrinterUtilInstance().printFormat(
-                                "<center_bold>打印测试</center_bold>" +
-                                        "<left>测试金额：66686.3</left>"
-                        );
+                        super.run();
+                        if (mExecutorService == null) {
+                            mExecutorService = Executors.newCachedThreadPool();
+                        }
+                        mExecutorService.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                App.getPrinterUtilInstance().printFormat(
+                                        "<center_bold>打印测试</center_bold>" +
+                                                "<left>测试金额：66686.3</left>"
+                                );
+                            }
+                        });
                     }
-                });
+                }.start();
                 break;
             default:
                 break;
@@ -256,10 +266,10 @@ public class WifiPrintFragment extends Fragment implements View.OnClickListener 
      * 开始搜索打印机
      */
     private void searchPrinter() {
-        mIpAddress = SearchPrinterUtil.getIpAddress(getActivity());
+        mIpAddress = SearchPrinterUtil.getIpAddress(this);
         LogUtil.e("获取的ip地址--》" + mIpAddress);
         if (TextUtils.isEmpty(mIpAddress)) {
-            DialogUtil.showToastDialog((AppCompatActivity) getActivity(), "温馨提示", "wifi暂未连接，请先连接wifi，然后使用打印机开关进行搜索打印机", "知道了");
+            DialogUtil.showToastDialog(this, "温馨提示", "wifi暂未连接，请先连接wifi，然后使用打印机开关进行搜索打印机", "知道了");
         } else {
             RunThread runThread = new RunThread();
             runThread.start();
@@ -327,7 +337,7 @@ public class WifiPrintFragment extends Fragment implements View.OnClickListener 
                 //断开连接
                 case 0:
                     //sp文件保存的是否开启打印
-                    boolean isOpenPrinter = SharedPreferencesUtils.getBoolean(getActivity(), SharedPreferencesUtils.Printer_Open_Status);
+                    boolean isOpenPrinter = SharedPreferencesUtils.getBoolean(PrinterSettingActivity.this, SharedPreferencesUtils.Printer_Open_Status);
                     if (isOpenPrinter) {
                         if (TextUtils.isEmpty(getIpAddress())) {
                             ToastUtil.show("请先设置打印机ip地址");
@@ -346,7 +356,7 @@ public class WifiPrintFragment extends Fragment implements View.OnClickListener 
                 //正在连接
                 case 2:
                     //sp文件保存的是否开启打印
-                    boolean mIsOpenPrinter = SharedPreferencesUtils.getBoolean(getActivity(), SharedPreferencesUtils.Printer_Open_Status);
+                    boolean mIsOpenPrinter = SharedPreferencesUtils.getBoolean(PrinterSettingActivity.this, SharedPreferencesUtils.Printer_Open_Status);
                     if (mIsOpenPrinter) {
                         if (TextUtils.isEmpty(getIpAddress())) {
                             ToastUtil.show("请先设置打印机ip地址");
@@ -376,15 +386,15 @@ public class WifiPrintFragment extends Fragment implements View.OnClickListener 
     private void setSharedPreferencesIpAddress() {
         for (int i = 0; i < mList.size(); i++) {
             if (mList.get(i).isSelect()) {
-                SharedPreferencesUtils.save(getActivity(), SharedPreferencesUtils.Printer_IP_Address, mList.get(i).getIp());
+                SharedPreferencesUtils.save(PrinterSettingActivity.this, SharedPreferencesUtils.Printer_IP_Address, mList.get(i).getIp());
             } else {
-                SharedPreferencesUtils.save(getActivity(), SharedPreferencesUtils.Printer_IP_Address, "");
+                SharedPreferencesUtils.save(PrinterSettingActivity.this, SharedPreferencesUtils.Printer_IP_Address, "");
             }
         }
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ADD_PRINTER_REQUEST_CODE) {
             if (resultCode == ADD_PRINTER_RESULT_CODE) {
@@ -396,6 +406,7 @@ public class WifiPrintFragment extends Fragment implements View.OnClickListener 
                 mList.add(printerSettingBean);
                 refreshRecycleView(mList.size() - 1);
             }
+
         }
 
     }

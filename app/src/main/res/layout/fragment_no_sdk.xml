@@ -14,7 +14,7 @@
         android:paddingTop="12pt">
 
         <TextView
-            android:id="@+id/wifi_device_name"
+            android:id="@+id/no_sdk_device_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -23,7 +23,7 @@
             android:textSize="14pt" />
     </RelativeLayout>
     <RelativeLayout
-        android:id="@+id/wifi_print_connect"
+        android:id="@+id/no_sdk_print_connect"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10pt"
@@ -35,17 +35,17 @@
 
 
         <TextView
-            android:id="@+id/btn_wifi_connect"
+            android:id="@+id/btn_no_sdk_connect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:background="@null"
-            android:text="打印机搜索"
+            android:text="@string/receipt_print_connect"
             android:textColor="@color/colorGrayText"
             android:textSize="14pt" />
 
         <TextView
-            android:id="@+id/wifi_print_state"
+            android:id="@+id/no_sdk_print_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -56,7 +56,7 @@
             android:textSize="14pt" />
     </RelativeLayout>
     <RelativeLayout
-        android:id="@+id/wifi_off_print"
+        android:id="@+id/no_sdk_off_print"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10pt"
@@ -79,7 +79,7 @@
 
     </RelativeLayout>
     <RelativeLayout
-        android:id="@+id/wifi_print_test"
+        android:id="@+id/no_sdk_print_test"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10pt"
@@ -90,7 +90,7 @@
         android:paddingTop="12pt">
 
         <TextView
-            android:id="@+id/wifi_test"
+            android:id="@+id/no_sdk_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -99,56 +99,4 @@
             android:textColor="@color/colorGrayText"
             android:textSize="14pt" />
     </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/wifi_no_sdk_print_test"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10pt"
-        android:background="@drawable/bg_button_gray"
-        android:clickable="true"
-        android:paddingBottom="12pt"
-        android:paddingLeft="30pt"
-        android:paddingTop="12pt">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:background="@null"
-            android:text="无SDK打印测试"
-            android:textColor="@color/colorGrayText"
-            android:textSize="14pt" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/wifi_hand_add_printer"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10pt"
-        android:background="@drawable/bg_button_gray"
-        android:clickable="true"
-        android:paddingBottom="12pt"
-        android:paddingLeft="30pt"
-        android:paddingTop="12pt">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:background="@null"
-            android:text="手动添加打印机"
-            android:textColor="@color/colorGrayText"
-            android:textSize="14pt" />
-    </RelativeLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="请点击搜索列表的item进行连接"
-        android:textColor="#404040"
-        android:textSize="14pt"
-        />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/wifi_printer_recycle"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 </LinearLayout>

@@ -120,6 +120,7 @@ public class BarcodeScannerResolver {
 
     /**
      * 获取扫描内容
+     *
      * @param event
      * @return
      */

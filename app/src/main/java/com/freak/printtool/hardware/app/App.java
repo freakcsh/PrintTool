@@ -28,6 +28,7 @@ import com.freak.printtool.R;
 import com.freak.printtool.hardware.base.IActivityStatusBar;
 import com.freak.printtool.hardware.module.receipt.printreceipt.MyUsbPrinterUtil;
 import com.freak.printtool.hardware.module.receipt.printreceipt.PrintCategory;
+import com.freak.printtool.hardware.module.wifi.printerutil.PrinterUtil;
 import com.freak.printtool.hardware.receiver.NetworkConnectChangedReceiver;
 import com.freak.printtool.hardware.receiver.UsbDeviceConnectChangedReceiver;
 import com.freak.printtool.hardware.utils.LogUtil;
@@ -86,6 +87,7 @@ public class App extends Application {
 
     private UsbDeviceConnectChangedReceiver mUsbDeviceConnectChangedReceiver;
 
+    private static PrinterUtil mPrinterUtil;
 
     public static synchronized App getInstance() {
         return instance;
@@ -322,6 +324,7 @@ public class App extends Application {
         }
         return null;
     }
+
     /**
      * 判断是否是刘海屏  华为手机
      *
@@ -397,6 +400,7 @@ public class App extends Application {
         return ret;
 
     }
+
     public void addActivity(Activity act) {
         if (allActivities == null) {
             allActivities = new HashSet<>();
@@ -557,5 +561,17 @@ public class App extends Application {
 
     public void setUsbPrinter(UsbPrinter usbPrinter) {
         this.usbPrinter = usbPrinter;
+    }
+
+
+    public static PrinterUtil getPrinterUtilInstance() {
+        if (mPrinterUtil == null) {
+            synchronized (PrinterUtil.class) {
+                if (mPrinterUtil == null) {
+                    mPrinterUtil = new PrinterUtil(getInstance());
+                }
+            }
+        }
+        return mPrinterUtil;
     }
 }

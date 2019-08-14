@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#f5f5f5"
+    >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include layout="@layout/layout_toolbar" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="44pt"
+        android:text="请输入IP地址"
+        android:textColor="#404040"
+        android:textSize="14pt"
+        android:gravity="center_vertical"
+        android:paddingLeft="15pt"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="44pt"
+        android:background="#ffffff">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="IP地址"
+            android:textSize="14pt"
+            android:textColor="#404040"
+            android:paddingLeft="16pt"/>
+        <View
+            android:layout_width="1pt"
+            android:layout_height="25pt"
+            android:background="#04a0eb"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="25pt"/>
+        <EditText
+            android:id="@+id/edit_text_ip_address"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:hint="输入IP地址"
+            android:textColorHint="#999999"
+            android:paddingLeft="6pt"
+            android:textColor="#999999"
+            android:textSize="14pt"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_view_ip_commit"
+        android:layout_width="345pt"
+        android:layout_height="44pt"
+        android:textSize="16pt"
+        android:text="完成"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:layout_marginLeft="15pt"
+        android:layout_marginStart="15pt"
+        android:layout_marginTop="25pt"
+        android:background="@drawable/bg_circle_shape_blue_5"/>
+</LinearLayout>
+
+
+</RelativeLayout>

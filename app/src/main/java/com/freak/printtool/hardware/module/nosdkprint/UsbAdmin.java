@@ -1,4 +1,4 @@
-package com.freak.printtool.hardware.print;
+package com.freak.printtool.hardware.module.nosdkprint;
 
 import android.annotation.SuppressLint;
 import android.app.PendingIntent;
